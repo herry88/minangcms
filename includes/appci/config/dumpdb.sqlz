@@ -1,0 +1,329 @@
+--
+-- Table structure for table `album`
+--
+
+CREATE TABLE IF NOT EXISTS `album` (
+  `album_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `album_title` varchar(200) NOT NULL,
+  `album_date` datetime NOT NULL,
+  `album_description` text NOT NULL,
+  `album_user` bigint(20) unsigned NOT NULL,
+  `album_cover` varchar(120) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  PRIMARY KEY (`album_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `albumtaxonomy`
+--
+
+CREATE TABLE IF NOT EXISTS `albumtaxonomy` (
+  `album_taxonomy_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `album_id` bigint(20) unsigned NOT NULL,
+  `term_key` varchar(40) NOT NULL,
+  `term_value` text NOT NULL,
+  PRIMARY KEY (`album_taxonomy_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gallery`
+--
+
+CREATE TABLE IF NOT EXISTS `gallery` (
+  `gallery_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gallery_title` varchar(120) NOT NULL,
+  `gallery_description` text NOT NULL,
+  `gallery_date` datetime NOT NULL,
+  `gallery_user` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`gallery_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gallery_images`
+--
+
+CREATE TABLE IF NOT EXISTS `gallery_images` (
+  `gallery_images_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gallery_id` bigint(20) unsigned NOT NULL,
+  `gallery_date` datetime NOT NULL,
+  `gallery_file` text NOT NULL,
+  `gallery_alt` text NOT NULL,
+  `gallery_mime` varchar(120) NOT NULL,
+  PRIMARY KEY (`gallery_images_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `options`
+--
+
+CREATE TABLE IF NOT EXISTS `options` (
+  `option_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
+  `option_key` varchar(60) NOT NULL,
+  `option_val` text NOT NULL,
+  `tipe` varchar(20) NOT NULL,
+  `sistem` tinyint(1) NOT NULL,
+  PRIMARY KEY (`option_id`),
+  KEY `option_key` (`option_key`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
+
+--
+-- Dumping data for table `options`
+--
+
+INSERT INTO `options` (`option_id`, `option_key`, `option_val`, `tipe`, `sistem`) VALUES
+(1, 'company_email', 'admin@locahost', 'text', 1),
+(2, 'company_name', 'Administrator', 'text', 1),
+(3, 'company_phone', '123456789', 'text', 1),
+(4, 'company_fax', '', 'text', 1),
+(5, 'app_name', 'Minang CMS', 'text', 1),
+(6, 'app_basename', 'MinangCMS', 'text', 1),
+(7, 'app_version', '1.0', 'text', 1),
+(8, 'email_register_subject', 'Registrasi Email', 'text', 1),
+(9, 'email_register_message', 'Terima Kasih telah mendaftar pada website kami. Berikut login detail anda', 'text', 1),
+(10, 'email_recovery_subject', 'Permintaan Reset Password', 'text', 1),
+(11, 'email_recovery_message', 'Anda telah meminta untuk me-reset password anda. Silahkan klik tautan di bawah ini', 'text', 1),
+(12, 'service_login_captcha', '1', 'text', 1),
+(13, 'service_login_bruceforce', '1', 'text', 1),
+(14, 'captcha_savepath', '', 'text', 1),
+(15, 'captcha_type', 'simple', 'text', 1),
+(16, 'captcha_data', '{"0":"1"}', 'text', 1),
+(17, 'cookie_app', 'minangcms', 'text', 1),
+(18, 'encrypt_app', '141054f2590ae08ebf699c05a216c10f', 'text', 1),
+(19, 'app_register', '0', 'text', 1),
+(20, 'theme_backend', 'lte', 'text', 1),
+(21, 'theme_front', 'okto1', 'text', 1),
+(22, 'site_offline', '0', 'text', 1),
+(23, 'session_role', 'minang_role_session', 'text', 1),
+(24, 'session_user', 'minang_user_session', 'text', 1),
+(25, 'site_title', 'Minang CMS2', 'text', 0),
+(26, 'site_description', 'CMS From Nagari Minangkabau', 'text', 0),
+(27, 'site_comment', '1', 'option', 0),
+(28, 'site_frontpage', 'post', 'text', 0),
+(29, 'site_frontpage_page', '', 'text', 0),
+(30, 'site_searchengine', '1', 'option', 0),
+(31, 'site_comment_moderator', '1', 'option', 0),
+(32, 'service_login_bruceforce_limit', '3', 'text', 1),
+(33, 'service_login_bruceforce_direct', 'http://www.google.com', 'text', 1),
+(34, 'captcha_enable', '1', 'text', 1),
+(35, 'site_permalink', 'title', 'text', 1),
+(36, 'permalink_category', 'category', 'text', 1),
+(37, 'permalink_tags', 'tag', 'text', 1),
+(38, 'site_logo', '', 'text', 0),
+(39, 'site_favicon', '', 'text', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `postcomment`
+--
+
+CREATE TABLE IF NOT EXISTS `postcomment` (
+  `post_comment_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) unsigned NOT NULL,
+  `comment_date` datetime NOT NULL,
+  `nama` varchar(120) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  `comment` text NOT NULL,
+  `comment_data` text NOT NULL,
+  `comment_status` varchar(20) NOT NULL,
+  PRIMARY KEY (`post_comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE IF NOT EXISTS `posts` (
+  `post_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_title` text NOT NULL,
+  `post_date` datetime NOT NULL,
+  `post_type` varchar(20) NOT NULL,
+  `post_content` longtext NOT NULL,
+  `post_user` bigint(20) unsigned NOT NULL,
+  `post_slug` varchar(200) NOT NULL,
+  `post_status` varchar(20) NOT NULL,
+  PRIMARY KEY (`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `poststaxonomy`
+--
+
+CREATE TABLE IF NOT EXISTS `poststaxonomy` (
+  `post_taxonomy_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) unsigned NOT NULL,
+  `term_type` varchar(20) NOT NULL,
+  `term_value` text NOT NULL,
+  PRIMARY KEY (`post_taxonomy_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `route`
+--
+
+CREATE TABLE IF NOT EXISTS `route` (
+  `route_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
+  `route_name` varchar(60) NOT NULL,
+  `route_key` varchar(200) NOT NULL,
+  `route_val` varchar(200) NOT NULL,
+  PRIMARY KEY (`route_id`),
+  KEY `route_key` (`route_key`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+
+--
+-- Dumping data for table `route`
+--
+
+INSERT INTO `route` (`route_id`, `route_name`, `route_key`, `route_val`) VALUES
+(1, 'logout', 'logout', 'authentication/auth/logoutdo'),
+(2, 'login', 'login', 'authentication/auth'),
+(3, 'loginproccess', 'logindo', 'authentication/auth/logindo'),
+(4, 'register', 'register', 'authentication/auth/register'),
+(5, 'registerprocess', 'registerdo', 'authentication/auth/registerdo'),
+(6, 'forgot', 'forgot', 'authentication/auth/forgot'),
+(7, 'forgotproccess', 'forgotdo', 'authentication/auth/forgotdo'),
+(9, 'category', 'category/(:any)', 'frontend/homepage/category/$1'),
+(10, 'tag', 'tag/(:any)', 'frontend/homepage/tag/$1'),
+(11, '404', '404_override', 'frontend/homepage/index'),
+(12, 'post', '(:any)', 'frontend/homepage/index/$1'),
+(13, 'search', 'search', 'frontend/homepage/search'),
+(14, 'comment', 'comment', 'frontend/homepage/comment'),
+(15, 'freshinstall', 'installuser', 'authentication/auth/freshinstall'),
+(16, 'media', 'media/(:any)', 'frontend/homepage/media/$1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `terms`
+--
+
+CREATE TABLE IF NOT EXISTS `terms` (
+  `term_id` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `slug` varchar(200) NOT NULL,
+  `term_parent` int(10) NOT NULL DEFAULT '0',
+  `term_data` text NOT NULL,
+  `order_term` int(4) NOT NULL,
+  PRIMARY KEY (`term_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
+
+--
+-- Dumping data for table `terms`
+--
+
+INSERT INTO `terms` (`term_id`, `name`, `slug`, `term_parent`, `term_data`, `order_term`) VALUES
+(1, 'Uncategorized', 'uncategorized', 0, '', 0),
+(40, 'html_widget', 'html-widget', 0, '{"service":"html","description":"Eksekusi kode HTML atau Javascript"}', 0),
+(41, 'category_widget', 'category-widget', 0, '{"prefix":"catwidget","description":"Menampilkan kategori"}', 0),
+(57, 'images-widget', 'images-widget', 0, '{"service":"images","description":"Menampilkan images"}', 0),
+(76, 'okto1_sidebar_homepageleft', 'okto1-sidebar-homepageleft', 0, '{"theme":"okto1"}', 0),
+(77, 'okto1_sidebar_homepageright', 'okto1-sidebar-homepageright', 0, '{"theme":"okto1"}', 0),
+(78, 'okto1_sidebar_blogright', 'okto1-sidebar-blogright', 0, '{"theme":"okto1"}', 0),
+(79, 'okto1_sidebar_blogleft', 'okto1-sidebar-blogleft', 0, '{"theme":"okto1"}', 0),
+(85, 'event-widget', 'event-widget', 0, '{"service":"event","description":"Menampilkan event"}', 0),
+(86, 'okto1-template', 'okto1-template', 0, '{"theme":"okto1","footer":"Copyright © Minang CMS. Heru Rahmat Akhnuari"}', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `termstaxonomy`
+--
+
+CREATE TABLE IF NOT EXISTS `termstaxonomy` (
+  `term_taxonomy_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `term_id` bigint(20) unsigned NOT NULL,
+  `term_type` varchar(32) NOT NULL,
+  `description` longtext NOT NULL,
+  `parent` bigint(10) unsigned NOT NULL,
+  `order_term` int(4) NOT NULL,
+  PRIMARY KEY (`term_taxonomy_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=90 ;
+
+--
+-- Dumping data for table `termstaxonomy`
+--
+
+INSERT INTO `termstaxonomy` (`term_taxonomy_id`, `term_id`, `term_type`, `description`, `parent`, `order_term`) VALUES
+(1, 1, 'category', '', 0, 0),
+(40, 40, 'html_widget', 'Eksekusi kode HTML atau Javascript', 0, 0),
+(41, 41, 'category_widget', 'Menampilkan kategori', 0, 0),
+(57, 57, 'images_widget', 'Menampilkan images', 0, 0),
+(76, 76, 'sidebar', '', 0, 0),
+(77, 77, 'sidebar', '', 0, 0),
+(78, 78, 'sidebar', '', 0, 0),
+(79, 79, 'sidebar', '', 0, 0),
+(85, 85, 'event_widget', 'Menampilkan event', 0, 0),
+(86, 86, 'template', '', 0, 0),
+(87, 87, 'blockip', '', 0, 0),
+(88, 88, 'blockip', '', 0, 0),
+(89, 89, 'blockip', '', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userlogin`
+--
+
+CREATE TABLE IF NOT EXISTS `userlogin` (
+  `user_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(60) NOT NULL,
+  `password` varchar(125) NOT NULL,
+  `nama` varchar(120) NOT NULL,
+  `hp` varchar(30) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `email` varchar(60) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userrole`
+--
+
+CREATE TABLE IF NOT EXISTS `userrole` (
+  `role_id` int(4) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(60) NOT NULL,
+  `role_key` varchar(60) NOT NULL,
+  `role_module` varchar(125) NOT NULL,
+  PRIMARY KEY (`role_id`),
+  KEY `role_name` (`role_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `userrole`
+--
+
+INSERT INTO `userrole` (`role_id`, `role_name`, `role_key`, `role_module`) VALUES
+(1, 'Administrator', 'mimin', 'manage/dashboard'),
+(3, 'Editor', 'editor', 'manage/dashboard');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usertaxonomy`
+--
+
+CREATE TABLE IF NOT EXISTS `usertaxonomy` (
+  `taxo_id` bigint(13) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(13) unsigned NOT NULL,
+  `taxo_key` varchar(60) NOT NULL,
+  `taxo_val` text NOT NULL,
+  `taxo_expired` datetime DEFAULT NULL,
+  PRIMARY KEY (`taxo_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
