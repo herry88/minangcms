@@ -1,16 +1,18 @@
 # minangcms
 CMS Gratis dari Ranah Minang untuk Indonesia
 
-Minang CMS adalah sebuah open source sejenis web manajemen. Cara penggunaan :
-1. Download dan copy paste pada hosting anda
-2. Buat database baru dan hak user aksesnya
-3. Lalu jalankan apikasi. Akan terlihat installernya
-4. Set konfigurasi database sesuai server anda
-5. Buat sebuah user Administrator baru
+Minang CMS adalah sebuah open source sejenis web manajemen. Cara penggunaan :<br/>
+1. Download dan copy paste pada hosting anda<br/>
+2. Buat database baru dan hak user aksesnya<br/>
+3. Lalu jalankan apikasi. Akan terlihat installernya<br/>
+4. Set konfigurasi database sesuai server anda<br/>
+5. Buat sebuah user Administrator baru<br/>
 
-Sistem yang direkomendasikan :
-1. PHP 5.4 ++
-2. Apache Mod Rewrite
-3. Mcrypt PHP
+Sistem yang direkomendasikan :<br/>
+1. PHP 5.4 ++<br/>
+2. Apache Mod Rewrite<br/>
+3. Mcrypt PHP<br/>
+
+Untuk informasi detail, kunjungi http://herurahmat.my.id/minang-cms-open-source-content-management-system/
 
 Copyright Ilmuprogrammer.com , herurahmat.my.id
