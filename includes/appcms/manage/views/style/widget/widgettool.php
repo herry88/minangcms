@@ -14,8 +14,8 @@ $json=json_encode(array(
 ));
 insertTerms($val."_widget",$val."-widget",$val."-widget",'Menampilkan '.$val,"0",$json);
 
-        ?>
-        <div class="col-md-6">
+        ?>        
+        <div class="col-md-4 col-sm-6">
         <div class="panel panel-default">
         	<div class="panel-heading"><?=$label;?></div>
         	<div class="panel-body">
@@ -33,6 +33,7 @@ insertTerms($val."_widget",$val."-widget",$val."-widget",'Menampilkan '.$val,"0"
         	</div>
         </div>
         </div>
+        
         <?php
 	}	        	
 }
