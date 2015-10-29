@@ -5,7 +5,6 @@ class Captcha extends MX_Controller
     function __construct()
     {
         parent::__construct();
-        $this->load->library('session');
     }
     
     function index()
@@ -82,13 +81,15 @@ class Captcha extends MX_Controller
 			//require MODPATH.'service/libraries/captcha/'.$className.'.php';
 			//$c=new $className();
 			//$proses=$c->verifyCaptcha();
-			
+			/*
 			if($proses==TRUE){
 				return true;
 			}else{
 				$this->session->set_flashdata('catpchaerror','Captcha tidak valid');
 				return false;
 			}
+			*/
+			return $proses;
 		}		
 	}
     
