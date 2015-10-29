@@ -109,6 +109,23 @@ if(!function_exists('postTaxonomy')){
 	}
 }
 
+if(!function_exists('postTaxonomyArr')){
+	function postTaxonomyArr($postid,$termType){
+		$CI=& get_instance();
+		$s=array(
+		'post_id'=>$postid,
+		'term_type'=>$termType,
+		);
+		if($CI->m_database->countData('poststaxonomy',$s) > 0){
+			$d=$CI->m_database->fetchData('poststaxonomy',$s);
+			return $d;
+		}else{
+			return null;
+		}
+	}
+}
+
+
 if(!function_exists('postTaxonomyExists')){
 	function postTaxonomyExists($postid,$termType,$value){
 		$CI=& get_instance();
