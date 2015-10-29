@@ -14,7 +14,7 @@ foreach($data as $row){
 }
 ?>
 <?php
-$valTag=postTaxonomy($row->post_id,'tag');
+$valTag=postTaxonomyArr($row->post_id,'tag');
 $dbTag='';
 if(!empty($valTag)){
 foreach($valTag as $rTag){

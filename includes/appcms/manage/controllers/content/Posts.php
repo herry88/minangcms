@@ -230,5 +230,10 @@ class Posts extends MX_Controller
 		$this->postmod->deletePost($id);
 		redirect(base_url(roleURIUser().'content/posts'),'refresh');
 	}
+	
+	function getcategory(){
+		$d['tipe']="post";
+		$this->load->view(roleURIUser().'content/post/categoryside',$d);
+	}
     
 }

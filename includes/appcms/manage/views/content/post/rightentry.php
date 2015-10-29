@@ -70,7 +70,64 @@ $("#remFeature").click(function(){
 	$(this).hide();
 });
 
+getCategorySidebar();
+
+$("#addcategory").click(function(){
+	$("#addcategorydiv").toggle();
 });
+
+$("#btnaddcategory").click(function(){
+	var add=$("#addname").val();
+	var pr=$("#addparent").val();
+	
+	if(add!=''){
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url:'<?=base_url(roleURIUser());?>/content/category/add',
+			data:'addname='+add+"&addparent="+pr+"&adddescription=",
+			beforeSend:function(){
+			},
+			success:function(x){			
+				getCategorySidebar();
+				$("#addname").val("");
+				$("#addcategorydiv").hide();
+			},
+		});
+	}else{
+		return false;
+	}
+});
+
+});
+
+function getCategorySidebar(){
+	$.ajax({
+		type:'get',
+		dataType:'html',
+		url:'<?=base_url(roleURIUser());?>/content/posts/getcategory',
+		data:'v=1',
+		beforeSend:function(){
+		},
+		success:function(x){
+			$("#categoryside").html(x);
+			getCombo();
+		},
+	});
+}
+
+function getCombo(){
+	$.ajax({
+		type:'post',
+		dataType:'html',
+		url:'<?=base_url(roleURIUser()."content/category/getcombocat");?>',
+		data:'once=1',
+		success:function(x){
+			$("#addparent").html(x);
+		},
+	});
+}
+
 </script>
 <style type="text/css">
 #kcfinder_div {
@@ -224,30 +281,16 @@ if($tipe=="post"){
   </div>
 </div>
 <div class="box-body" style="overflow: auto;height:200px;">
-  <?php
-  $p='';
-  $dParent=getCategory();		
-	if(!empty($dParent)){
-	foreach($dParent as $rParent){
-		$p.='<div class="checkbox">';
-		$p.='<label>';
-		$p.='<input type="checkbox" name="kat[]" value="'.$rParent->term_id.'"/>'.$rParent->name;
-		$p.='</label>';
-		$p.='</div>';		
-		$dChild=getCategory($rParent->term_id);
-		if(!empty($dChild)){									
-		foreach($dChild as $rChild){
-			$p.='<div class="checkbox">';
-			$p.='<label>';
-			$p.='<span style="padding-left:10px;"><input type="checkbox" name="kat[]" value="'.$rChild->term_id.'"/>'.$rChild->name.'</style>';
-			$p.='</label>';
-			$p.='</div>';
-		}
-		}
-	}
-	}
-	echo $p;
-  ?>
+  <div id="categoryside"></div>
+</div>
+<div class="box-footer">
+	<a href="javascript:;" id="addcategory">+ Tambah Kategori</a>
+	<div id="addcategorydiv" style="display: none;">		
+		<input type="text" name="addname" id="addname" class="form-control"/><br/>
+		<select name="addparent" id="addparent" class="form-control">		
+		</select><br/>
+		<button type="button" id="btnaddcategory" class="btn btn-default">Tambah Kategori</button>
+	</div>
 </div>
 </div>
 <?php } ?>

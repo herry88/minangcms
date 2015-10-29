@@ -111,7 +111,7 @@ class Post_model extends MX_Controller
 		$output=array();
 		if($this->m_database->editRow('posts',$d,$s)==TRUE){
 			
-			
+			$this->deleteCategoryPost($postid);
 			$this->insertCategoryPost($postid,$category);
 			$this->insertTagPost($postid,$tags);
 			$this->insertTaxonomyPost($postid,"keyword_custom",$keywordAdd);
@@ -236,13 +236,22 @@ class Post_model extends MX_Controller
 			$d=array(
 				'post_id'=>$postid,
 				'term_type'=>'category',
-				'term_value'=>'uncategorized',
+				'term_value'=>'1',
 				);
 			if($this->m_database->isBOF('poststaxonomy',$d)==TRUE){
 				$this->m_database->addRow('poststaxonomy',$d);
 			}
 			
 		}
+	}
+	
+	function deleteCategoryPost($postid){
+		$s=array(
+		'post_id'=>$postid,
+		'term_type'=>'category',
+		);
+		
+		$this->m_database->deleteRow('poststaxonomy',$s);
 	}
 	
 	function insertTagPost($postid,$tags){

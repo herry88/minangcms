@@ -25,7 +25,13 @@ class Category extends MX_Controller
 		$this->m_security->filterPost('addname','required');
 		if($this->m_security->startPost()==TRUE){
 			$name=$this->input->post('addname',TRUE);
-			$slug=$this->input->post('addslug',TRUE);
+			$slug="";
+			$slugX=$this->input->post('addslug',TRUE);
+			if(!empty($slugX)){
+				$slug=$slugX;
+			}else{
+				$slug=stringCreateSlug($name);
+			}
 			$parent=$this->input->post('addparent',TRUE);
 			$desc=$this->input->post('adddescription',TRUE);
 			
