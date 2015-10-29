@@ -20,7 +20,10 @@ class Simple_captcha
     function generateDo(){		
 		ob_start();
 		$text = rand(10000,99999);
-		$this->CI->session->set_userdata('simplecaptcha',$text);		
+		$sesCaptcha=$this->CI->session->userdata('simplecaptcha');
+		if(empty($sesCaptcha)){
+		$this->CI->session->set_userdata('simplecaptcha',$text);	
+		}		
 		$height = 22;
 		$width = 60;
 		$image_p = imagecreate($width, $height);
@@ -47,13 +50,16 @@ class Simple_captcha
 		if(!empty($respon)){
 			$sesCaptcha=$this->CI->session->userdata('simplecaptcha');
 			if($respon==$sesCaptcha){
-				//$this->CI->session->unset_userdata('simplecaptcha');
-				return true;
+				$this->CI->session->unset_userdata('simplecaptcha');
+				var_dump('OK');
+				//return true;
 			}else{
-				return false;
+				var_dump('NO 1 '.$respon." ".$sesCaptcha);
+				//return false;
 			}
 		}else{
-			return false;
+			var_dump('NO 2');
+			//return false;
 		}
 	}
     
