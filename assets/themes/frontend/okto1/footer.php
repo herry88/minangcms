@@ -14,5 +14,6 @@ if(empty($foot) or $foot=='Copyright &copy; Heru Rahmat'){
 </div>
     <script src="<?=locationTheme();?>frontend/okto1/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="<?=locationTheme();?>frontend/okto1/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?=locationTheme();?>frontend/okto1/dist/js/custom.js"></script>
   </body>
 </html>

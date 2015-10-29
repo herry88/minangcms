@@ -5,6 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?=$title;?></title>
+<?php echo mc_meta($route,$data);?>
 <link href="<?=locationTheme();?>frontend/okto1/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="<?=locationTheme();?>frontend/okto1/dist/css/style.css" rel="stylesheet">
 <link href="<?=locationTheme();?>frontend/okto1/dist/css/reset.css" rel="stylesheet">
@@ -46,7 +47,8 @@
       <a class="navbar-brand" href="<?=base_url();?>"><img src="<?=mc_favicon();?>"/></a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">      	      
+      <ul class="nav navbar-nav">
+      	<li><a href="<?=base_url();?>">Beranda</a></li>
         <?php echo menuTop();?>
       </ul>
     </div>
