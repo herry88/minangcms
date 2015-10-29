@@ -89,13 +89,13 @@ class Homepage extends MX_Controller
 	}
 	
 	
-	function comment(){
-		$j=modules::run('service/login/captcha/service_after');
+	function comment2(){
+		$j= modules::run('service/login/captcha/service_after');
 		var_dump($this->session->all_userdata());
 		var_dump($j);
 	}
 	
-	function comment2(){
+	function comment(){
 		$token=tokenGenerate();
 		$this->load->library('m_security');
 		
@@ -104,23 +104,27 @@ class Homepage extends MX_Controller
 		$this->m_security->filterPost('email','required');
 		$this->m_security->filterPost('data','required');
 		
+		$this->load->library('user_agent');		
+		
 		if($this->m_security->startPost()==TRUE){
 			$postid=$this->input->post('postid',TRUE);
 			$name=$this->input->post('name',TRUE);
 			$email=$this->input->post('email',TRUE);
-			$data=$this->input->post('data',TRUE);
+			$dataX=$this->input->post('data',TRUE);
+			$data=$this->m_security->filterXSS($dataX);
+			$this->load->helper('security');
+			$data=xss_clean($dataX);
 			$url=permalinkPost($postid);
-			$back='<a href="'.$url.'">'."Kembali ke halaman berita".'</a>';			
-			$service=modules::run('service/login/captcha/service_after');
-			if($service==TRUE){
+			$back='<a href="'.$url.'">'."Kembali ke halaman berita".'</a>';												
+			if($this->agent->is_robot==FALSE){
 				$proses=commentInsert($postid,$name,$email,$data);
-				exit($proses['callback'].".".$back);
-			}else{				
-				exit("Komentar anda gagal diterbitkan3 $k.".$back);
-			}
+				redirect($url,'refresh');
+			}else{
+				redirect($url,'refresh');
+			}					
 			
 		}else{
-			exit("Komentar anda gagal diterbitkan");
+			redirect($url,'refresh');
 		}
 		
 	}
