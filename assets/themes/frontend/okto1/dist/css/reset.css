@@ -1,0 +1,74 @@
+@media (min-width:768px){
+
+.body-wrapper
+{
+	width: 930px;
+}
+
+.navbar{
+	border:0px;
+}
+	
+.navbar-brand
+{
+	display: none;
+}
+
+.top-logo img{
+	width: 90px;
+	margin: 5px;
+}
+
+.top{	
+	color: #fff;
+	height: 100px;
+	background: rgba(28,99,166,1);
+background: -moz-linear-gradient(top, rgba(28,99,166,1) 0%, rgba(26,41,138,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(28,99,166,1)), color-stop(100%, rgba(26,41,138,1)));
+background: -webkit-linear-gradient(top, rgba(28,99,166,1) 0%, rgba(26,41,138,1) 100%);
+background: -o-linear-gradient(top, rgba(28,99,166,1) 0%, rgba(26,41,138,1) 100%);
+background: -ms-linear-gradient(top, rgba(28,99,166,1) 0%, rgba(26,41,138,1) 100%);
+background: linear-gradient(to bottom, rgba(28,99,166,1) 0%, rgba(26,41,138,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1c63a6', endColorstr='#1a298a', GradientType=0 );
+}
+
+
+.carousel .item img{
+  height: 300px !important;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-caption {
+  z-index: 10;
+    background: rgba(0, 0, 0, 0.45);    
+}
+
+.carousel-caption a,
+.carousel-caption a:hover,
+.carousel-caption a:link,
+.carousel-caption a:active{
+	color: #fff;	
+}
+
+
+}
+
+@media (max-width:768px){
+
+.navbar-brand img
+{
+	visibility: visible;
+	width: 50px;
+	margin-top: -15px;
+}
+
+.top{
+	display: none;
+}
+
+.carousel{
+  display: none;
+}
+
+}

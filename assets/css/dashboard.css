@@ -1,0 +1,37 @@
+@import url("../font/opensans/css/fonts.css");
+
+body
+{
+  	font-family: 'Open Sans';
+  	font-weight: 400;
+  	font-style: normal;
+}
+
+li.treeview,.btn-xs{
+  	font-family: 'Open Sans' !important;
+  	font-weight: 300;
+  	font-style: normal;
+}
+
+.btn-md,.btn-lg{
+	font-family: 'Open Sans' !important;
+  	font-weight: 600;
+  	font-style: normal;
+}
+
+
+.cloudtag {
+	 padding: 2px; 
+	 line-height: 3em; 
+	 text-align: center; 
+} 
+.cloudtag a {
+	 padding: 0px; 
+}
+
+.cloudtag {
+	 margin: 0;
+} 
+.cloudtag li {
+	 display: inline; 
+}

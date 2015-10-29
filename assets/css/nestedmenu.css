@@ -1,0 +1,23 @@
+.placeholder {
+	outline: 1px dashed #4183C4;
+}
+
+.mjs-nestedSortable-error {
+	background: #fbe3e4;
+	border-color: transparent;
+}
+
+
+ol {
+	width: 100%;
+	padding-left: 25px;
+	margin-top: 5px;
+}
+
+ol.sortable,ol.sortable ol {
+	list-style-type: none;
+}
+
+.sortable li div {
+	margin-bottom: 4px;
+}
