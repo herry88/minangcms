@@ -286,6 +286,16 @@ if(!function_exists('mc_galleryimage')){
 	}
 }
 
+if(!function_exists('mc_meta')){
+	function mc_meta($route,$data){
+		$CI=& get_instance();
+		$CI->load->library('m_seo');
+		$item=$CI->m_seo->generateMeta($route,$data);
+		return $item;
+	}
+}
+
+
 function imagePath($img){
 	if(!empty($img)){
 		if(ENVIRONMENT=="development"){

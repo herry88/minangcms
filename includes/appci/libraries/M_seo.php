@@ -103,4 +103,74 @@ class M_seo{
 		$slug=dbField('posts','post_id',$postid,'post_slug');		
 		return base_url().$slug;
 	}
+	
+	
+	function generateMeta($route,$data){
+		$google=optionGet('google');
+		$bing=optionGet('bing');
+		$alexa=optionGet('alexa');
+		$ogfacebook=optionGet('ogfacebook');
+		
+		$xGoogle="";
+		$xBing="";
+		$xAlexa="";
+		$xOgFacebook="";
+		if($google!=""){
+			$xGoogle='<meta name="google-site-verification" content="'.$google.'"/>';
+		}else{
+			$xGoogle="";
+		}
+		
+		if($bing!=""){
+			$xBing='<meta name="msvalidate.01" content="'.$bing.'" />';
+		}else{
+			$xBing='';
+		}
+		
+		if($alexa!=""){
+			$xAlexa='<meta name="alexaVerifyID" content="'.$alexa.'"/>';
+		}else{
+			$xAlexa='';
+		}
+		
+		
+		$output="";
+		$SEO=optionGet('site_searchengine');
+		if($SEO==1){
+			$output.=$xGoogle;
+			$output.=$xBing;
+			$output.=$xAlexa;			
+		}else{
+			$output.="<meta name='robots' content='noindex,follow' />";
+		}
+		if($ogfacebook=='1'){
+			$output.=$this->generateOGFB($route,$data);
+		}
+		$output.='<meta name="geo.country" content="id"/><meta name="geo.placename" content="Indonesia"/>';
+		return $output;		
+	}
+	
+	function generateOGFB($route,$data){
+		$title='';
+		$img='';
+		$type='';
+		$permalink='';		
+		if($route=="post"){
+			$postid=$this->CI->m_database->fieldRow('posts',$data,'post_id');
+			$img=mc_imagepost($postid);
+			$title=postInfo($postid,'post_title');
+			$type="website";
+			$permalink=permalinkPost($postid);
+		}else{
+			$img=mc_logo();
+			$title=optionGet('site_title');
+			$type="website";
+			$permalink=base_url();
+		}
+		
+		$output="";
+		$output.='<meta property="og:title" content="'.$title.'" /><meta property="og:type" content="'.$type.'" /><meta property="og:url" content="'.$permalink.'" /><meta property="og:image" content="'.$img.'" />';
+		
+		return $output;
+	}
 }
