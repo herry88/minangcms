@@ -29,5 +29,6 @@
         <li><a href="<?=base_url(roleURIUser().'config/konfigurasi');?>"><i class="fa fa-circle-o"></i> <?=langGet("menu","menu_configuration_general");?></a></li>
         <li><a href="<?=base_url(roleURIUser().'config/dbtools');?>"><i class="fa fa-circle-o"></i> <?=langGet("menu","menu_configuration_database");?></a></li>
         <li><a href="<?=base_url(roleURIUser().'config/permalink');?>"><i class="fa fa-circle-o"></i> <?=langGet("menu","menu_configuration_permalink");?></a></li>
+        <li><a href="<?=base_url(roleURIUser().'config/searchengine');?>"><i class="fa fa-circle-o"></i> Search Engine</a></li>
     </ul>
 </li>
