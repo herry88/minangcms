@@ -9,6 +9,8 @@ class Users extends MX_Controller
 			exit(langGet('global','noaccess'));
 		}
 		$this->load->library(array('m_security','m_auth'));
+		
+		$this->create_operator();
     }
     
     function index()
@@ -18,6 +20,19 @@ class Users extends MX_Controller
         $this->load->view('userview');
         $this->load->view('public/footer');
     }
+    
+    
+    function create_operator(){		
+		$s=array(
+		'role_name'=>'Operator',
+		'role_key'=>'op',
+		'role_module'=>'manage/dashboard',
+		);
+		
+		if($this->m_database->isBOF('userrole',$s)==TRUE){
+			$this->m_database->addRow('userrole',$s);
+		}
+	}
     
     function viewdata(){
 		$rolename=roleURIUser();
