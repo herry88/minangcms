@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `options` (
   `sistem` tinyint(1) NOT NULL,
   PRIMARY KEY (`option_id`),
   KEY `option_key` (`option_key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
 
 --
 -- Dumping data for table `options`
@@ -117,7 +117,11 @@ INSERT INTO `options` (`option_id`, `option_key`, `option_val`, `tipe`, `sistem`
 (36, 'permalink_category', 'category', 'text', 1),
 (37, 'permalink_tags', 'tag', 'text', 1),
 (38, 'site_logo', '', 'text', 0),
-(39, 'site_favicon', '', 'text', 0);
+(39, 'site_favicon', '', 'text', 0),
+(40, 'google', '', 'text', 1),
+(41, 'bing', '', 'text', 1),
+(42, 'alexa', '', 'text', 1),
+(43, 'ogfacebook', '1', 'text', 1);
 
 -- --------------------------------------------------------
 
@@ -135,7 +139,14 @@ CREATE TABLE IF NOT EXISTS `postcomment` (
   `comment_data` text NOT NULL,
   `comment_status` varchar(20) NOT NULL,
   PRIMARY KEY (`post_comment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `postcomment`
+--
+
+INSERT INTO `postcomment` (`post_comment_id`, `post_id`, `comment_date`, `nama`, `email`, `comment`, `comment_data`, `comment_status`) VALUES
+(2, 1, '2015-10-30 02:48:26', 'asdasd', 'asdasd', '[removed]alert&#40;''asdasd''&#41;[removed]', '{"ipaddress":"::1"}', 'publish');
 
 -- --------------------------------------------------------
 
@@ -153,7 +164,14 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `post_slug` varchar(200) NOT NULL,
   `post_status` varchar(20) NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`post_id`, `post_title`, `post_date`, `post_type`, `post_content`, `post_user`, `post_slug`, `post_status`) VALUES
+(1, 'Sambut Syawal, Masjid Raya Sumbar Menggelar Syawal Kreatif', '2015-10-30 00:45:58', 'post', '<p>TRENDNEWS.co.id &ndash; Memasuki 1 Syawal 1436 H Dinas Pariwisata dan Ekonomi Kreatif Provinsi Sumatera Barat kembali menggelar Syawal Kreatif.&nbsp; Syawal Kreatif akan diisi dengan berbagai rangkaian acara yang dikemas dalam bentuk musik takbir yang dikolaborasikan.&nbsp; Ribuan jamaah diperkirakan akan menghadiri gelaran yang akan menggema dari Masjid Raya Sumbar pada malam takbir, Kamis (16/7). Kepala Dinas Pariwisata dan Ekonomi Kreatif Provinsi Sumatera Barat, Burhasman, Senin (13/7) menjelaskan kegiatan ini merupakan yang ke dua kalinya dilaksanakan di Masjid Raya Sumbar. Gebyar semarak takbir akan didukung oleh qori dan qori&rsquo;ah terbaik se Sumatera Barat serta pelaku seni religi. &ldquo;Dari sore hingga malam hari, gema takbir, tahmid dan tahlil berpadu dengan musik religi akan menggema sehingga menghidupkan suasana malam takbir yang penuh nuansa Islami,&rdquo; kata Burhasman. Ia menambahkan, yang diharapkan dari acara ini adalah semarak penuh kekhusyu&rsquo;an umat Islam Sumatera Barat menyambut datangnya hari raya Idul Fitri 1 Syawal 1436 H. &ldquo;Dengan dipusatkan di Masjid Raya ini tentunya yang diharapkan adalah terciptanya kekhusyu&rsquo;an dalam menyemarakkan malam takbiran menyambut Idul Fitri,&rdquo; ujarnya. Kegiatan ini akan dibuka oleh Gubernur Sumatera Barat Irwan Prayitno dilanjutkan dengan pembacaan puisi religi oleh wakil gubernur Muslim Kasim.&nbsp; Burhasman mengajak masyarakat untuk dapat bersama-sama mengikuti gelaran takbir akbar tersebut dalam rangka menyemarakkan suasana menjelang idul fitri</p>\r\n', 1, 'sambut-syawal-masjid-raya-sumbar-menggelar-syawal-kreatif', 'publish');
 
 -- --------------------------------------------------------
 
@@ -167,7 +185,20 @@ CREATE TABLE IF NOT EXISTS `poststaxonomy` (
   `term_type` varchar(20) NOT NULL,
   `term_value` text NOT NULL,
   PRIMARY KEY (`post_taxonomy_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+--
+-- Dumping data for table `poststaxonomy`
+--
+
+INSERT INTO `poststaxonomy` (`post_taxonomy_id`, `post_id`, `term_type`, `term_value`) VALUES
+(2, 1, 'tag', 'sumbar'),
+(9, 1, 'tag', 'syawal'),
+(14, 1, 'category', '87'),
+(15, 1, 'keyword_custom', ''),
+(16, 1, 'comment_system', '1'),
+(17, 1, 'view_style', 'sidebar'),
+(18, 1, 'feature_image', '/minangcmsdev/assets/uploads/images/2nJZglXNLEbDtijTcWU3.jpg');
 
 -- --------------------------------------------------------
 
@@ -219,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `terms` (
   `term_data` text NOT NULL,
   `order_term` int(4) NOT NULL,
   PRIMARY KEY (`term_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=97 ;
 
 --
 -- Dumping data for table `terms`
@@ -228,14 +259,21 @@ CREATE TABLE IF NOT EXISTS `terms` (
 INSERT INTO `terms` (`term_id`, `name`, `slug`, `term_parent`, `term_data`, `order_term`) VALUES
 (1, 'Uncategorized', 'uncategorized', 0, '', 0),
 (40, 'html_widget', 'html-widget', 0, '{"service":"html","description":"Eksekusi kode HTML atau Javascript"}', 0),
-(41, 'category_widget', 'category-widget', 0, '{"prefix":"catwidget","description":"Menampilkan kategori"}', 0),
-(57, 'images-widget', 'images-widget', 0, '{"service":"images","description":"Menampilkan images"}', 0),
+(41, 'category_widget', 'category-widget', 0, '{"prefix":"catwidget","description":"Menampilkan berita per kategori"}', 0),
+(57, 'images-widget', 'images-widget', 0, '{"service":"images","description":"Menampilkan Gambar"}', 0),
 (76, 'okto1_sidebar_homepageleft', 'okto1-sidebar-homepageleft', 0, '{"theme":"okto1"}', 0),
 (77, 'okto1_sidebar_homepageright', 'okto1-sidebar-homepageright', 0, '{"theme":"okto1"}', 0),
 (78, 'okto1_sidebar_blogright', 'okto1-sidebar-blogright', 0, '{"theme":"okto1"}', 0),
 (79, 'okto1_sidebar_blogleft', 'okto1-sidebar-blogleft', 0, '{"theme":"okto1"}', 0),
 (85, 'event-widget', 'event-widget', 0, '{"service":"event","description":"Menampilkan event"}', 0),
-(86, 'okto1-template', 'okto1-template', 0, '{"theme":"okto1","footer":"Copyright © Minang CMS. Heru Rahmat Akhnuari"}', 0);
+(86, 'okto1-template', 'okto1-template', 0, '{"theme":"okto1","footer":"Copyright Â© Minang CMS. Heru Rahmat Akhnuari"}', 0),
+(87, 'Berita', 'berita', 0, '', 0),
+(91, 'sumbar', 'sumbar', 0, '', 0),
+(92, 'syawal', 'syawal', 0, '', 0),
+(93, 'Berita', 'berita_menu', 0, '{"create":"2015-10-30 00:48:10","relasi":"category","categoryid":"87"}', 0),
+(94, 'search-widget', 'search-widget', 0, '{"service":"search","description":"Menampilkan pencarian"}', 0),
+(95, 'recentpost-widget', 'recentpost-widget', 0, '{"service":"recentpost","description":"Menampilkan Berita Terbaru"}', 0),
+(96, 'okto1_sidebar_homepageleft_item', 'okto1-sidebar-homepageleft-item-1446141270', 76, '{"prefix":"recentpost","title":"Berita Terbaru"}', 0);
 
 -- --------------------------------------------------------
 
@@ -251,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `termstaxonomy` (
   `parent` bigint(10) unsigned NOT NULL,
   `order_term` int(4) NOT NULL,
   PRIMARY KEY (`term_taxonomy_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=90 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=100 ;
 
 --
 -- Dumping data for table `termstaxonomy`
@@ -269,8 +307,13 @@ INSERT INTO `termstaxonomy` (`term_taxonomy_id`, `term_id`, `term_type`, `descri
 (85, 85, 'event_widget', 'Menampilkan event', 0, 0),
 (86, 86, 'template', '', 0, 0),
 (87, 87, 'blockip', '', 0, 0),
-(88, 88, 'blockip', '', 0, 0),
-(89, 89, 'blockip', '', 0, 0);
+(90, 87, 'category', '', 0, 0),
+(94, 91, 'tag', '', 0, 0),
+(95, 92, 'tag', '', 0, 0),
+(96, 93, 'menu_top', '', 0, 0),
+(97, 94, 'search_widget', 'Menampilkan search', 0, 0),
+(98, 95, 'recentpost_widget', 'Menampilkan recentpost', 0, 0),
+(99, 96, 'sidebar', '', 76, 0);
 
 -- --------------------------------------------------------
 
@@ -288,7 +331,14 @@ CREATE TABLE IF NOT EXISTS `userlogin` (
   `email` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `userlogin`
+--
+
+INSERT INTO `userlogin` (`user_id`, `username`, `password`, `nama`, `hp`, `status`, `email`) VALUES
+(1, 'admin', 'sha256:1000:8PI4RcDwWekHuNrteo84Nrdr97Oq+o/N:cR4eey/aAQfV+00zRwVjqOtve9ky3/UO', 'admin', '', 'active', 'eyubalzary@gmail.com');
 
 -- --------------------------------------------------------
 
