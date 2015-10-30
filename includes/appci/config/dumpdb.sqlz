@@ -337,9 +337,6 @@ CREATE TABLE IF NOT EXISTS `userlogin` (
 -- Dumping data for table `userlogin`
 --
 
-INSERT INTO `userlogin` (`user_id`, `username`, `password`, `nama`, `hp`, `status`, `email`) VALUES
-(1, 'admin', 'sha256:1000:8PI4RcDwWekHuNrteo84Nrdr97Oq+o/N:cR4eey/aAQfV+00zRwVjqOtve9ky3/UO', 'admin', '', 'active', 'eyubalzary@gmail.com');
-
 -- --------------------------------------------------------
 
 --
