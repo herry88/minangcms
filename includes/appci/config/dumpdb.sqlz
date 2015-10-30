@@ -1,3 +1,5 @@
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `album`
 --
@@ -139,14 +141,7 @@ CREATE TABLE IF NOT EXISTS `postcomment` (
   `comment_data` text NOT NULL,
   `comment_status` varchar(20) NOT NULL,
   PRIMARY KEY (`post_comment_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `postcomment`
---
-
-INSERT INTO `postcomment` (`post_comment_id`, `post_id`, `comment_date`, `nama`, `email`, `comment`, `comment_data`, `comment_status`) VALUES
-(2, 1, '2015-10-30 02:48:26', 'asdasd', 'asdasd', '[removed]alert&#40;''asdasd''&#41;[removed]', '{"ipaddress":"::1"}', 'publish');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -164,14 +159,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `post_slug` varchar(200) NOT NULL,
   `post_status` varchar(20) NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`post_id`, `post_title`, `post_date`, `post_type`, `post_content`, `post_user`, `post_slug`, `post_status`) VALUES
-(1, 'Sambut Syawal, Masjid Raya Sumbar Menggelar Syawal Kreatif', '2015-10-30 00:45:58', 'post', '<p>TRENDNEWS.co.id &ndash; Memasuki 1 Syawal 1436 H Dinas Pariwisata dan Ekonomi Kreatif Provinsi Sumatera Barat kembali menggelar Syawal Kreatif.&nbsp; Syawal Kreatif akan diisi dengan berbagai rangkaian acara yang dikemas dalam bentuk musik takbir yang dikolaborasikan.&nbsp; Ribuan jamaah diperkirakan akan menghadiri gelaran yang akan menggema dari Masjid Raya Sumbar pada malam takbir, Kamis (16/7). Kepala Dinas Pariwisata dan Ekonomi Kreatif Provinsi Sumatera Barat, Burhasman, Senin (13/7) menjelaskan kegiatan ini merupakan yang ke dua kalinya dilaksanakan di Masjid Raya Sumbar. Gebyar semarak takbir akan didukung oleh qori dan qori&rsquo;ah terbaik se Sumatera Barat serta pelaku seni religi. &ldquo;Dari sore hingga malam hari, gema takbir, tahmid dan tahlil berpadu dengan musik religi akan menggema sehingga menghidupkan suasana malam takbir yang penuh nuansa Islami,&rdquo; kata Burhasman. Ia menambahkan, yang diharapkan dari acara ini adalah semarak penuh kekhusyu&rsquo;an umat Islam Sumatera Barat menyambut datangnya hari raya Idul Fitri 1 Syawal 1436 H. &ldquo;Dengan dipusatkan di Masjid Raya ini tentunya yang diharapkan adalah terciptanya kekhusyu&rsquo;an dalam menyemarakkan malam takbiran menyambut Idul Fitri,&rdquo; ujarnya. Kegiatan ini akan dibuka oleh Gubernur Sumatera Barat Irwan Prayitno dilanjutkan dengan pembacaan puisi religi oleh wakil gubernur Muslim Kasim.&nbsp; Burhasman mengajak masyarakat untuk dapat bersama-sama mengikuti gelaran takbir akbar tersebut dalam rangka menyemarakkan suasana menjelang idul fitri</p>\r\n', 1, 'sambut-syawal-masjid-raya-sumbar-menggelar-syawal-kreatif', 'publish');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -185,20 +173,7 @@ CREATE TABLE IF NOT EXISTS `poststaxonomy` (
   `term_type` varchar(20) NOT NULL,
   `term_value` text NOT NULL,
   PRIMARY KEY (`post_taxonomy_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
-
---
--- Dumping data for table `poststaxonomy`
---
-
-INSERT INTO `poststaxonomy` (`post_taxonomy_id`, `post_id`, `term_type`, `term_value`) VALUES
-(2, 1, 'tag', 'sumbar'),
-(9, 1, 'tag', 'syawal'),
-(14, 1, 'category', '87'),
-(15, 1, 'keyword_custom', ''),
-(16, 1, 'comment_system', '1'),
-(17, 1, 'view_style', 'sidebar'),
-(18, 1, 'feature_image', '/minangcmsdev/assets/uploads/images/2nJZglXNLEbDtijTcWU3.jpg');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -213,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `route` (
   `route_val` varchar(200) NOT NULL,
   PRIMARY KEY (`route_id`),
   KEY `route_key` (`route_key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `route`
@@ -234,7 +209,9 @@ INSERT INTO `route` (`route_id`, `route_name`, `route_key`, `route_val`) VALUES
 (13, 'search', 'search', 'frontend/homepage/search'),
 (14, 'comment', 'comment', 'frontend/homepage/comment'),
 (15, 'freshinstall', 'installuser', 'authentication/auth/freshinstall'),
-(16, 'media', 'media/(:any)', 'frontend/homepage/media/$1');
+(16, 'media', 'media/(:any)', 'frontend/homepage/media/$1'),
+(17, 'feed', 'feed', 'frontend/feed/index'),
+(18, 'feedcustom', 'feed/(:any)', 'frontend/feed/$1');
 
 -- --------------------------------------------------------
 
@@ -331,13 +308,8 @@ CREATE TABLE IF NOT EXISTS `userlogin` (
   `email` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
---
--- Dumping data for table `userlogin`
---
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `userrole`
@@ -350,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `userrole` (
   `role_module` varchar(125) NOT NULL,
   PRIMARY KEY (`role_id`),
   KEY `role_name` (`role_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `userrole`
@@ -358,7 +330,8 @@ CREATE TABLE IF NOT EXISTS `userrole` (
 
 INSERT INTO `userrole` (`role_id`, `role_name`, `role_key`, `role_module`) VALUES
 (1, 'Administrator', 'mimin', 'manage/dashboard'),
-(3, 'Editor', 'editor', 'manage/dashboard');
+(3, 'Editor', 'editor', 'manage/dashboard'),
+(4, 'Operator', 'op', 'manage/dashboard');
 
 -- --------------------------------------------------------
 
@@ -373,4 +346,4 @@ CREATE TABLE IF NOT EXISTS `usertaxonomy` (
   `taxo_val` text NOT NULL,
   `taxo_expired` datetime DEFAULT NULL,
   PRIMARY KEY (`taxo_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
