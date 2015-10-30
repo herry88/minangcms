@@ -28,14 +28,34 @@ class Posts extends MX_Controller
         $this->load->view('public/header',$meta);
         $d['tipe']="posts";
         $d['mod']="Berita";
-        $s=array(
-        'post_type'=>'post',
-        'post_status'=>'publish',
-        );
-        $s2=array(
-        'post_type'=>'post',
-        'post_status'=>'draft',
-        );
+        $s=array();
+        if(roleUser()=="op"){
+			$s=array(
+	        'post_type'=>'post',
+	        'post_status'=>'publish',
+	        'post_user'=>userInfo('user_id'),
+	        );
+		}else{
+			$s=array(
+	        'post_type'=>'post',
+	        'post_status'=>'publish',
+	        );
+		}
+		
+		$s2=array();
+		if(roleUser()=="op"){
+			$s2=array(
+	        'post_type'=>'post',
+	        'post_status'=>'draft',
+	        'post_user'=>userInfo('user_id'),
+	        );
+		}else{
+			$s2=array(
+	        'post_type'=>'post',
+	        'post_status'=>'draft',
+	        );
+		}
+        
         $d['publishcount']=$this->m_database->countData('posts',$s);
         $d['draftcount']=$this->m_database->countData('posts',$s2);
         $lastStatus='';
@@ -54,9 +74,24 @@ class Posts extends MX_Controller
     
     function viewdata(){
 		$rolename=roleURIUser();
+		$role="";
+		$userid=userInfo('user_id');
+		$arr=array();
+		$prefix=$this->db->dbprefix;		
 		$status=$this->input->get('post_status');
-        $this->load->library('Datatables');
-        $prefix=$this->db->dbprefix;        
+        $this->load->library('Datatables');        
+        if(roleUser()=="op"){
+			$arr=array(
+                $prefix.'posts.post_status'=>$status,
+                $prefix.'posts.post_type'=>'post',
+                $prefix.'posts.post_user'=>$userid,
+                );
+		}else{
+			$arr=array(
+                $prefix.'posts.post_status'=>$status,
+                $prefix.'posts.post_type'=>'post',
+                );
+		}
 		$this->datatables->select($prefix.'posts.post_id as ii, '.$prefix.'posts.post_title as judul,'.$prefix.'posts.post_date as tanggal')
             ->unset_column('post_id')
             ->add_column('aksi',$this->buttonAksi('$1',$rolename),"ii")
@@ -64,10 +99,7 @@ class Posts extends MX_Controller
             ->edit_column('kategori','$1','postCategory(ii)')
             ->edit_column('tags','$1','postTags(ii)')
             ->from($prefix.'posts')
-            ->where(array(
-                $prefix.'posts.post_status'=>$status,
-                $prefix.'posts.post_type'=>'post',
-                ));
+            ->where($arr);
  
         echo $this->datatables->generate();
 	}

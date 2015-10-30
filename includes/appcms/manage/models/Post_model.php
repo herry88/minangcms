@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Post_model extends MX_Controller
 {
     function addPost($title,$date,$content,$status='publish',$category=array(),$tags=array(),$keywordAdd='',$komentar,$tampilan,$feature){
+    	$xStatus="";
+    	if(roleUser()=="op"){
+			$xStatus="draft";
+		}else{
+			$xStatus="publish";
+		}
 		$d=array(
 		'post_title'=>$title,
 		'post_date'=>$date,
@@ -10,7 +16,7 @@ class Post_model extends MX_Controller
 		'post_content'=>$content,
 		'post_user'=>userInfo('user_id'),
 		'post_slug'=>stringCreateSlug($title),
-		'post_status'=>$status,
+		'post_status'=>$xStatus,
 		);
 		
 		$output=array();
