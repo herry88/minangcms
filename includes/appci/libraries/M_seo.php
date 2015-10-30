@@ -146,7 +146,9 @@ class M_seo{
 		if($ogfacebook=='1'){
 			$output.=$this->generateOGFB($route,$data);
 		}
-		$output.='<meta name="geo.country" content="id"/><meta name="geo.placename" content="Indonesia"/>';
+		$output.='<meta name="geo.country" content="id"/><meta name="geo.placename" content="Indonesia"/>';		
+		$output.=$this->generateKeyword($route,$data);
+		$output.='<meta name="generator" content="minangCMS"/>';
 		return $output;		
 	}
 	
@@ -173,4 +175,76 @@ class M_seo{
 		
 		return $output;
 	}
+	
+	function generateKeyword($route,$data){
+		$output='';
+		
+		$desc='';
+		$key='';
+		
+		$titleDefault=strtolower(optionGet('site_title'));
+		
+		if($route=="post"){
+			$postid=$this->CI->m_database->fieldRow('posts',$data,'post_id');			
+			$desc=postInfo($postid,'post_title');
+			$customKey=postTaxonomy($postid,'keyword_custom');
+			if(!empty($customKey)){
+				$key=$customKey.",".$titleDefault;
+			}else{
+				$key=strtoupper($title).",".$titleDefault;
+			}
+		}else{
+			$desc=optionGet('site_description');
+			$key=$titleDefault;
+			
+		}
+		
+		$output.='<meta name="description" content="'.$desc.'"/><meta name="keywords" content="'.$key.'"/>';
+		
+		return $output;
+	}
+	
+	
+	function generateFeed($type="atom",$view){
+		//$this->CI->load->library('ext/feed');
+		require_once dirname(__FILE__).'/ext/Feedweb.php';
+		$this->CI->load->helper('text');
+		$feed=new Feedweb();
+		$this->CI->load->library('m_database');
+		$maxDate=$this->CI->m_database->maxRow('posts','','post_date');
+		
+		$feed->title=optionGet('site_title');
+		$feed->description=optionGet('site_description');
+		$feed->link=base_url();
+		$feed->lang="id";
+		$feed->pubdate=$maxDate;
+		$param=array(
+		'post_status'=>'publish',
+		);
+		
+		$dPost=mc_allpost($param,'post_date DESC','',20);
+		
+		if($dPost['jumlah'] > 0){
+			foreach($dPost['data'] as $rPost){
+				$title=$rPost->post_title;
+				$author="";
+				$url=permalinkPost($rPost->post_id);
+				$date=$rPost->post_date;
+				$desc=word_limiter($rPost->post_content,50);
+				if(!empty($rPost->post_user)){
+					$author=dbField('userlogin','user_id',$rPost->post_user,'nama');
+				}else{
+					$author="Administrator";
+				}
+				$feed->add($title,$author,$url,$date,$desc);
+							
+			}
+		}else{
+			$feed->add(optionGet('site_title'),optionGet('site_title'),base_url(),dateNow(TRUE),optionGet('site_description'));
+		}
+		
+		$feed->render($type,$view);
+	}
+	
+	
 }
