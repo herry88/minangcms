@@ -17,8 +17,8 @@ class M_auth{
 	
 	function login(){
 		$token=tokenGenerate();
-		$this->CI->m_security->filterPost('muser_'.$token,'trim|required|min_length[3]');
-		$this->CI->m_security->filterPost('mpass_'.$token,'trim|required|min_length[3]');
+		$this->CI->m_security->filterPost('muser_'.$token,'trim|required|min_length[1]');
+		$this->CI->m_security->filterPost('mpass_'.$token,'trim|required|min_length[1]');
 		if($this->CI->m_security->startPost()==TRUE){
 			$user=$this->CI->input->post('muser_'.$token,TRUE);
 			$pass=$this->CI->input->post('mpass_'.$token,TRUE);
