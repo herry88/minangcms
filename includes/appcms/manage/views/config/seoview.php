@@ -23,9 +23,10 @@ echo form_open(base_url(roleURIUser()).'/config/searchengine',$att);
 </div>
 </div>
 <div class="form-group">
-<label class="col-sm-2 control-label">Alexa Validate</label>
+<label class="col-sm-2 control-label">Facebook OG</label>
 <div class="col-md-6">
 	<?php echo inputCheckbox("ogfacebook","",optionGet('ogfacebook'),'Tampilan Thumbnail Facebook saat share');?>
+	<span class="text-info"><a href="http://ogp.me/" target="_blank">Cek lebih lengkap</a></span>
 </div>
 </div>
 <div class="form-group">
