@@ -1,3 +1,4 @@
+<li><a href="<?=base_url(roleURIUser().'comments');?>"><i class="fa fa-comment-o"></i> <span>Komentar</span></a></li>
 <li class="treeview <?=menuActive("media");?>">
     <a href="#"><i class="fa fa-picture-o"></i> <span>Galeri Album</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
