@@ -38,6 +38,12 @@ class Templates extends MX_Controller
 		$d['title']=$title;
 		$this->load->view('frontend/templateloader',$d);
 	}
+	
+	function active(){
+		$v=$this->input->get('v');
+		optionSet('theme_front',$v,'1','text');
+		redirect(base_url(roleURIUser().'style/templates'),'refresh');
+	}
     
     function konfigurasi(){
     	$meta['judul']="Konfigurasi Tema";
