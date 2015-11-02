@@ -8,6 +8,7 @@ $slug=$rd['slug'];
 $wdTitle=menuInfoJSON($widgetid,'title');
 $wdSource=menuInfoJSON($widgetid,'source');
 $wdLimit=menuInfoJSON($widgetid,'limit');
+$wdStyle=menuInfoJSON($widgetid,'style');
 if(empty($wdTitle)){
 	$wdTitle="Category Widget";
 }
@@ -54,6 +55,19 @@ if(empty($wdLimit)){
     </select>
     <label>Jumlah Tampil</label>
     <input type="text" id="categorylimit<?=$widgetid;?>" class="form-control" value="<?=$wdLimit;?>"/>
+    <label>Style</label>
+    <select id="categorysyle<?=$widgetid;?>" class="form-control">
+    	<?php
+    	if(!empty($wdStyle)){
+			?>
+			<option value="<?=$wdStyle;?>"><?=ucfirst($wdStyle);?></option>
+			<?php
+		}
+    	?>
+    	<option value="" disabled="">-</option>
+    	<option value="thumbnail">Thumbnail</option>
+    	<option value="list">List</option>
+    </select>
     </div>
   </div>
   <div class="panel-footer">
@@ -72,11 +86,12 @@ function widgetCatChange(id){
 	var title=$("#categorytitle"+id).val();
 	var sourcehtml=$("#categorysource"+id).val();
 	var sourcelimit=$("#categorylimit"+id).val();
+	var stylew=$("#categorysyle"+id).val();
 	$.ajax({
 		type:'post',
 		dataType:'json',
 		url:'<?=base_url();?>service/widget/category/update',
-		data:'id='+id+"&title="+title+"&source="+sourcehtml+"&limit="+sourcelimit,
+		data:'id='+id+"&title="+title+"&source="+sourcehtml+"&limit="+sourcelimit+"&style="+stylew,
 		beforeSend:function(){
 		},
 		success:function(){

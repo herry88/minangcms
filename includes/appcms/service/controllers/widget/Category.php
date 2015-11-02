@@ -55,6 +55,7 @@ class Category extends MX_Controller
 		$source=$this->input->post('source');
 		$title=$this->input->post('title');
 		$limit=$this->input->post('limit');
+		$style=$this->input->post('style');
 		$name=dbField('terms','term_id',$did,'name');
 		$slug=dbField('terms','term_id',$did,'slug');
 		$parent=dbField('terms','term_id',$did,'term_parent');
@@ -63,6 +64,7 @@ class Category extends MX_Controller
 		'title'=>$title,
 		'source'=>$source,
 		'limit'=>$limit,
+		'style'=>$style,
 		));
 		updateTerms($did,"sidebar",$name,$slug,"",$parent,$json);
 		

@@ -7,6 +7,8 @@ $source="";
 $catID=menuInfoJSON($widgetID,'source');
 $titleBox="";
 $title=menuInfoJSON($widgetID,'title');
+$limit=menuInfoJSON($widgetID,'limit');
+$style=menuInfoJSON($widgetID,'style');
 if(!empty($title)){
 	$titleBox=$title;
 }else{
@@ -18,22 +20,20 @@ if(!empty($catID)){
 	$source=1;
 }
 $catLink=permalinkCategory($source);
+$catName=$titleBox;
 ?>
-<div class="widget-item">
-<div class="widget-item-title"><?=$titleBox;?><span class="widget-item-more"><a href="<?=$catLink;?>">more</a></span></div>
-<div class="widget-item-body">
-<?php
-$g=mc_postCategory($source,"post_date DESC","5");
-if(!empty($g)){
-	foreach($g as $r){
-		$url=permalinkPost($r->post_id);
-		?>
-		<li><a href="<?=$url;?>"><?=$r->post_title;?></a></li>
-		<?php
-	}
-}
 
-//mc_postCategory
+
+<?php
+$output='';
+$g=mc_postCategory($source,"post_date DESC",$limit);
+$d['data']=$g;
+$d['catLink']=$catLink;
+$d['catName']=$catName;
+$d['catID']=$source;
+if($style=="thumbnail"){
+	$this->load->view('service/widget/category/thumbnailview',$d);
+}elseif($style=="list"){
+	$this->load->view('service/widget/category/listview',$d);
+}
 ?>
-</div>
-</div>
