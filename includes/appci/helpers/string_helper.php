@@ -101,6 +101,14 @@ if(!function_exists('langGet')){
 	}
 }
 
+if(!function_exists('stringWordLimit')){
+	function stringWordLimit($str,$limit=20){
+		$CI=& get_instance();
+		$CI->load->helper('text');
+		$item=word_limiter($str,$limit);
+		return $item;
+	}
+}
 
 
 ?>
