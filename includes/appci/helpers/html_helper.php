@@ -82,7 +82,7 @@ if(!function_exists('checkState')){
 if(!function_exists('menuData')){
 	function menuData($pos,$parentID='0'){
 		$CI=& get_instance();
-		$menu=getTerms('menu_'.$pos,$parentID,'order_term ASC');		
+		$menu=getTerms('menu_'.$pos."_".getThemeActive(),$parentID,'order_term ASC');				
 		if(!empty($menu)){
 			return $menu;
 		}else{
@@ -95,7 +95,8 @@ if(!function_exists('menuOutput')){
 	function menuOutput($pos){
 		$CI=& get_instance();
 		$CI->load->model('manage/menu_model','mm');
-		return $CI->mm->menuGenerate($pos);
+		$theme=optionGet('theme_front');
+		return $CI->mm->menuGenerate($theme,$pos);
 	}
 }
 
@@ -122,6 +123,19 @@ if(!function_exists('searchImageString')){
 	    $first_img = noImageBig();
 	  }
 	  return $first_img;
+	}
+}
+
+
+if(!function_exists('arrayHTML')){
+	function arrayHTML($arr){
+		$output="";
+		foreach($arr as $k=>$v){
+			$output.=$k.'="'.$v.'" ';
+		}
+		
+		$output=substr($output,0,-1);
+		return $output;
 	}
 }
 

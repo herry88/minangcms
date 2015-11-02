@@ -150,9 +150,9 @@ if(!function_exists('mc_get_sidebar_item')){
 }
 
 if(!function_exists('mc_menu')){
-	function mc_menu($position='top',$parentID='0'){
+	function mc_menu($theme,$position='top',$parentID='0'){
 		$CI=& get_instance();
-		$menu=getTerms('menu_'.$position,$parentID,'order_term ASC');		
+		$menu=getTerms('menu_'.$position."_".$theme,$parentID,'order_term ASC');		
 		if(!empty($menu)){
 			return $menu;
 		}else{
@@ -217,14 +217,24 @@ if(!function_exists('mc_commentPost')){
 	}
 }
 
+if(!function_exists('mc_themeConfigSet')){
+	function mc_themeConfigSet($theme,$key,$jsondata){
+		$CI=& get_instance();
+		$CI->load->helper('posts_helper');
+		if(!empty($jsondata)){
+			insertTerms('template',$theme."-template-config-".$key,$theme."-template-config-".$key,"","",$jsondata);
+		}		
+	}
+}
+
 if(!function_exists('mc_themeConfigGet')){
-	function mc_themeConfigGet($theme,$key){
+	function mc_themeConfigGet($theme,$key,$prefixData){
 		$CI=& get_instance();
 		$s=array(
-		'name'=>$theme."-template",
+		'name'=>$theme."-template-config-".$key,
 		);
 		$termid=$CI->m_database->FieldRow('terms',$s,'term_id');
-		$item=menuInfoJSON($termid,$key);
+		$item=menuInfoJSON($termid,$prefixData);
 		if(!empty($item)){
 			return $item;
 		}else{
@@ -236,14 +246,6 @@ if(!function_exists('mc_themeConfigGet')){
 if(!function_exists('mc_requestUpdateTheme')){
 	function mc_requestUpdateTheme(){
 		return base_url(roleURIUser().'style/templates/updateconfig');
-	}
-}
-
-if(!function_exists('mc_themeConfigSet')){
-	function mc_themeConfigSet($theme,$data){
-		$CI=& get_instance();
-		$CI->load->helper('posts_helper');
-		insertTerms('template',$theme."-template",$theme."-template","","",$data);
 	}
 }
 
@@ -292,6 +294,45 @@ if(!function_exists('mc_meta')){
 		$CI->load->library('m_seo');
 		$item=$CI->m_seo->generateMeta($route,$data);
 		return $item;
+	}
+}
+
+
+if(!function_exists('mc_themeUrl')){
+	function mc_themeUrl($themename,$type='url'){
+		return locationTheme($type).'frontend/'.$themename.'/';
+	}
+}
+
+if(!function_exists('mc_register_menu')){
+	function mc_register_menu($theme,$position){		
+		$data=json_encode(array(
+		'theme'=>$theme,
+		'rel'=>'menu',
+		));		
+		insertTerms('menu_theme',$theme.'_theme_menu_'.$position,$theme.'-theme-menu-'.$position,'',$data);
+	}
+}
+
+
+if(!function_exists('mc_countPostInfo')){
+	function mc_countPostInfo($postid,$info){
+		$CI=& get_instance();
+		
+		$s=array(
+		'post_id'=>$postid,
+		);
+		if($CI->m_database->isBOF('posts',$s)==FALSE){
+			if($info=="comment"){
+				$item=$CI->m_database->countData('postcomment',$s);
+				return $item;
+			}elseif($info=="hit"){
+				$item=$CI->m_database->fieldRow('posts',$s,'post_hit');
+				return $item;
+			}
+		}else{
+			return "";
+		}
 	}
 }
 
