@@ -1,7 +1,3 @@
-<?php
-$lastmenu=$this->input->get('open');
-$lastmenu=isset($lastmenu) ? $lastmenu : "top";
-?>
 <div class="panel-group" id="accordion">
 
 <?php
@@ -30,7 +26,7 @@ echo form_open('#',$at1);
   	foreach($dPage['data'] as $rPage){
 		$poutput.='<div class="checkbox">';
 		$poutput.='<label>';
-		$poutput.='<input type="checkbox" name="page[]" id="page" value="'.$rPage->post_id.'"/>'.$rPage->post_title;
+		$poutput.='<input type="checkbox" name="page[]" id="page" class="chkpage"  value="'.$rPage->post_id.'"/>'.$rPage->post_title;
 		$poutput.='</label>';
 		$poutput.='</div>';
 	}
@@ -38,7 +34,7 @@ echo form_open('#',$at1);
   }  
   ?>        
   </div>
-  <input type="hidden" name="menu" value="<?=$lastmenu;?>"/>
+  <input type="hidden" name="menu" class="globalpos" value=""/>
   <div class="panel-footer">
   	<button type="submit" id="btnPage" class="btn btn-flat btn-default">Tambah ke Menu</button>
   </div>
@@ -63,11 +59,11 @@ echo form_open('#',$at2);
 <div id="c2" class="panel-collapse collapse">
   <div class="panel-body">
   <label>Link</label><br/>
-  <input type="text" name="linkurl" class="form-control" required="" placeholder="http://"/><br/>
+  <input type="text" name="linkurl" id="linkurl" class="form-control" required="" placeholder="http://"/><br/>
   <label>Link Teks</label><br/>
-  <input type="text" name="linktitle" class="form-control" required=""/><br/>
+  <input type="text" name="linktitle" id="linktitle" class="form-control" required=""/><br/>
   </div>
-  <input type="hidden" name="menu" value="<?=$lastmenu;?>"/>
+  <input type="hidden" name="menu" class="globalpos" value=""/>
   <div class="panel-footer">
   	<button type="submit" id="btnLink" class="btn btn-flat btn-default">Tambah ke Menu</button>
   </div>
@@ -99,7 +95,7 @@ echo form_open('#',$at3);
 	foreach($dParent as $rParent){
 		$p.='<div class="checkbox">';
 		$p.='<label>';
-		$p.='<input type="checkbox" name="kat[]" class="getkat" value="'.$rParent->term_id.'"/>'.$rParent->name;
+		$p.='<input type="checkbox" name="kat[]" class="getkat chkkat" value="'.$rParent->term_id.'"/>'.$rParent->name;
 		$p.='</label>';
 		$p.='</div>';		
 		$dChild=getCategory($rParent->term_id);
@@ -107,7 +103,7 @@ echo form_open('#',$at3);
 		foreach($dChild as $rChild){				
 			$p.='<div class="checkbox">';
 			$p.='<label>';
-			$p.='<span style="padding-left:10px;"><input type="checkbox" name="kat[]" class="getkat" value="'.$rChild->term_id.'"/>'.$rChild->name.'</style>';
+			$p.='<span style="padding-left:10px;"><input type="checkbox" name="kat[]" class="getkat chkkat" value="'.$rChild->term_id.'"/>'.$rChild->name.'</style>';
 			$p.='</label>';
 			$p.='</div>';
 		}
@@ -117,7 +113,7 @@ echo form_open('#',$at3);
 	echo $p;
   ?>
   </div>
-  <input type="hidden" name="menu" value="<?=$lastmenu;?>"/>
+  <input type="hidden" name="menu" class="globalpos" value=""/>
   <div class="panel-footer">
   	<button type="submit" id="btnKategori" class="btn btn-flat btn-default">Tambah ke Menu</button>
   </div>
@@ -158,7 +154,7 @@ echo form_open('#',$at4);
   ?>
   </select>
   </div>
-  <input type="hidden" name="menu" value="<?=$lastmenu;?>"/>
+  <input type="hidden" name="menu" class="globalpos" value=""/>
   <div class="panel-footer">
   	<button type="submit" id="btnKategori" class="btn btn-flat btn-default">Tambah ke Menu</button>
   </div>
@@ -185,6 +181,7 @@ $("#entriPage").submit(function(e){
 		beforeSend:function(){
 		},
 		success:function(x){
+			$(".chkpage").attr('checked', false);
 			getMenu();
 		},
 	});
@@ -201,7 +198,8 @@ $("#entriKategori").submit(function(e){
 		beforeSend:function(){
 		},
 		success:function(x){
-			getMenu();
+			$(".chkkat").attr('checked', false);
+			getMenu();			
 		},
 	});
 });
