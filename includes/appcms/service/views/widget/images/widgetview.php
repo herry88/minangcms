@@ -12,7 +12,7 @@ $imageX=menuInfoJSON($widgetID,'image');
 if(!empty($title)){
 	$titleBox=$title;
 }else{
-	$titleBox="";
+	$titleBox="Image Widget";
 }
 if(!empty($url)){
 	$source=$url;
@@ -26,9 +26,20 @@ if(!empty($imageX)){
 	$image=noImage();
 }
 ?>
-<div class="widget-item">
-<div class="widget-item-title"><?=$titleBox;?></div>
-<div class="widget-item-body">
-<a href="<?=$source;?>" target="_blank"><img src="<?=$imageX;?>"/></a>
+<div class="widget widget-info">
+<div class="widget-header">
+	<h3 class="widget-title"><?=$titleBox;?></h3>
+	<div class="widget-tools pull-right"></div>
+</div>
+<div class="widget-body">
+<div class="widget-content">
+<a href="<?=$source;?>" target="_blank">
+<div class="widget-left">
+<div class="image-thumbnail">
+<img src="<?=$imageX;?>" class="widget-image-original"/>
+</div>
+</div>
+</a>
+</div>
 </div>
 </div>

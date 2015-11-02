@@ -37,6 +37,7 @@ if(empty($wdLimit)){
   </div>
 </div>
 </div>
+</div>
 
 <script>
 $(document).ready(function(){

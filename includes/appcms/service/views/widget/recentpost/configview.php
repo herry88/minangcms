@@ -6,6 +6,7 @@ $widgetid=$rd['term_id'];
 $name=$rd['name'];
 $slug=$rd['slug'];
 $wdTitle=menuInfoJSON($widgetid,'title');
+$wdLimit=menuInfoJSON($widgetid,'limit');
 if(empty($wdTitle)){
 	$wdTitle="Recent Post Widget";
 }
@@ -29,12 +30,14 @@ if(empty($wdLimit)){
     <div class="form-horizontal">
     <label>Label</label>
     <input type="text" id="recentposttitle<?=$widgetid;?>" class="form-control" value="<?=$wdTitle;?>"/>
-    <label>Menampilakn 5 Recent Post terbaru</label>        
+    <label>Jumlah Tampil</label>
+    <input type="text" id="recentpostlimit<?=$widgetid;?>" class="form-control" value="<?=$wdLimit;?>"/>    
   </div>
   <div class="panel-footer">
   	<a href="javascript:;" onclick="widgetCatDelete('<?=$widgetid;?>');" class="btn btn-danger btn-flat btn-xs pull-left" data-id="<?=$widgetid;?>">Delete</a>&nbsp;
   	<a href="javascript:;" class="btn btn-primary btn-flat btn-xs" onclick="widgetCatChange('<?=$widgetid;?>','');" data-id="<?=$widgetid;?>">Ubah</a>
   </div>
+</div>
 </div>
 </div>
 
@@ -46,7 +49,7 @@ $(document).ready(function(){
 function widgetCatChange(id){
 	var title=$("#recentposttitle"+id).val();
 	var sourcehtml=$("#recentpostsource"+id).val();
-	var sourcelimit=$("#recentpostlimit"+id).val();
+	var sourcelimit=$("#recentpostlimit"+id).val();	
 	$.ajax({
 		type:'post',
 		dataType:'json',

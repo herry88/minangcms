@@ -16,7 +16,7 @@ if(!empty($title)){
 if(!empty($url)){
 	$source=$url;
 }else{
-	$source=1;
+	$source="";
 }
 
 ?>

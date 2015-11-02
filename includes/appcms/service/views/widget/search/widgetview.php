@@ -12,7 +12,7 @@ if(!empty($title)){
 	$titleBox="Search Widget";
 }
 ?>
-<div class="widget-item">
+<div class="widget-item" style="margin-bottom: 20px;">
 <div class="widget-item-title"><?=$titleBox;?></div>
 <div class="widget-item-body">
 <form method="get" action="<?=routeGet('search','route_key');?>">

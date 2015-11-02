@@ -55,12 +55,14 @@ class Recentpost extends MX_Controller
 		$this->load->library('m_database');
 		$did=$this->input->post('id');		
 		$title=$this->input->post('title');
+		$limit=$this->input->post('limit');
 		$name=dbField('terms','term_id',$did,'name');
 		$slug=dbField('terms','term_id',$did,'slug');
 		$parent=dbField('terms','term_id',$did,'term_parent');
 		$json=json_encode(array(
 		'prefix'=>'recentpost',
 		'title'=>$title,
+		'limit'=>$limit,
 		));
 		updateTerms($did,"sidebar",$name,$slug,"",$parent,$json);
 		

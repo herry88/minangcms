@@ -12,9 +12,12 @@ if(!empty($title)){
 	$titleBox="Event Widget";
 }
 ?>
-<div class="widget-item">
-<div class="widget-item-title"><?=$titleBox;?></div>
-<div class="widget-item-body">
+<div class="widget widget-info">
+<div class="widget-header">
+	<h3 class="widget-title"><?=$titleBox;?></h3>
+	<div class="widget-tools pull-right"><a href="<?=base_url(routeGet('events','route_key'));?>">+ indexs</a></div>
+</div>
+<div class="widget-body">
 <?php
 $para=array(
 'post_type'=>'event'
@@ -40,8 +43,20 @@ if($g['jumlah'] > 0){
 		$merge=$tgl." ".$jam.":00";
 		$konversi=date("d-M-Y H:i",strtotime($merge));		
 		$jadwalNama='<span class="widget-item-calendar">'.$konversi.'</span>';
+		$day=date("d",strtotime($merge));
+		$month=date("M",strtotime($merge));
 		?>
-		<li><a href="<?=$url;?>"><?=$r->post_title;?></a><?=$jadwalNama;?></li>
+		<div class="widget-content">
+		<a href="<?=$url;?>" class="widget-anchor">
+		<div class="widget-left">
+			<div class="event-day"><?=$day;?></div>
+			<div class="event-month"><?=$month;?></div>
+		</div>
+		<div class="widget-right">
+			<div class="event-title"><?=$r->post_title;?> adklakjkjkjsdlkjalksjdkljalksdjalkkasjdlkajlksdjklajsd</div>
+		</div>
+		</a>
+		</div>
 		<?php
 	}
 }
