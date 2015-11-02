@@ -1,14 +1,40 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Menu_model extends MX_Controller
-{    
-	function menuGenerate($pos){
+{	
+	
+	function formatTree($tree, $parent='0'){
+        $tree2 = array();
+        foreach($tree as $i => $item){
+            if($item['parent'] == $parent){
+                $tree2[$item['term_id']] = $item;
+                $tree2[$item['term_id']]['submenu'] = $this->formatTree($tree, $item['term_id']);
+            }
+        }
+
+        return $tree2;
+    }
+    
+    function prepareMenu($theme,$pos){
+    	$prefix=$this->db->dbprefix;
+    	$sec="menu_".$pos."_".$theme;
+		$sql="Select term_id,parent FROM ".$prefix."termstaxonomy Where term_type='$sec'";
+		$query=$this->db->query($sql);
+		if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return null;
+		}
+	}		
+	
+	function menuGenerate($theme,$pos){
 		$p='';
-		$h1=menuData($pos,'0');
+		$h1=mc_menu($theme,$pos,'0');
+		
 		if(!empty($h1)){
 		foreach($h1 as $r1){
 			$hp1=$r1->term_id;	
-			$h2=menuData($pos,$hp1);
+			$h2=mc_menu($theme,$pos,$hp1);
 			if(!empty($h2)){				
 				$p.='<li id="menuItem_'.$r1->term_id.'">';
 				$p.='<div>';
@@ -17,7 +43,7 @@ class Menu_model extends MX_Controller
 				$p.='<ol>';
 				foreach($h2 as $r2){
 					$hp2=$r2->term_id;
-					$h3=menuData($pos,$hp2);
+					$h3=mc_menu($theme,$pos,$hp2);
 					if(!empty($h3)){
 						$p.='<li id="menuItem_'.$r2->term_id.'">';
 						$p.='<div id="parent_id_'.$hp1.'">';
@@ -62,7 +88,7 @@ class Menu_model extends MX_Controller
     	$p.='<div class="panel-heading">';
       	$p.='<h4 class="panel-title">';
         $p.='<a data-toggle="collapse" data-parent="#accordion" href="#clp_'.$menuID.'">';
-        $p.=$title;
+        $p.=$title." <small class='pull-right'>ID:".$menuID.",Parent:".$parent."</small>";
         $relasi=menuInfoJSON($menuID,"relasi");
         $p.=' <small><i>'.$relasi.'</i></small>';
         $p.='</a>';
@@ -70,8 +96,7 @@ class Menu_model extends MX_Controller
     	$p.='</div>';
     	
     	$p.='<div id="clp_'.$menuID.'" class="panel-collapse collapse">';
-    	$p.='<div class="panel-body">';
-    	$p.=$parent;
+    	$p.='<div class="panel-body">';    	
     	if($relasi=="page"){
     		$pageID=menuInfoJSON($menuID,'pageid');
 			$p.=$this->pageContent($pageID,$menuID,$title);
@@ -145,5 +170,7 @@ class Menu_model extends MX_Controller
 		$p.='</small>';		
 		return $p;
 	}
+	
+	
 	
 }
