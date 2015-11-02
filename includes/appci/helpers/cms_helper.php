@@ -274,4 +274,12 @@ if(!function_exists('commentInsert')){
 	}
 }
 
+
+if(!function_exists('getThemeActive')){
+	function getThemeActive(){
+		$item=optionGet('theme_front');
+		return $item;
+	}
+}
+
 ?>
