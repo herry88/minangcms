@@ -42,7 +42,7 @@ $themeActive=optionGet('theme_front');
 <div class="col-md-4">
 	<?php $this->load->view('style/menu/sidebartool');?>
 </div>
-<div class="col-md-8" id="menuloader" style="display: none;">
+<div class="col-md-8" id="menuloader" style="display: none;overflow: auto;height: 400px;">
 	
 </div>
 </div>

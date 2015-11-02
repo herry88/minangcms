@@ -32,7 +32,7 @@ class Menus extends MX_Controller
 				'theme'=>getThemeActive(),
 				));
 				$catName=categoryInfo($v,'name');
-				$catSlug=categoryInfo($v,'slug')."_menu";
+				$catSlug=categoryInfo($v,'slug')."-".getThemeActive()."-menu";
 				insertTerms("menu_".$menu."_".getThemeActive(),$catName,$catSlug,"","",$json);
 			}
 			echo json_encode('ok');
@@ -52,7 +52,7 @@ class Menus extends MX_Controller
 				'theme'=>getThemeActive(),
 				));
 				$tt=strtotime(dateNow(TRUE));
-				insertTerms("menu_".$menu."_".getThemeActive(),"gallery-".$v."-".$tt,"gallery-".$tt,"","",$json);
+				insertTerms("menu_".$menu."_".getThemeActive(),"gallery-".$v."-".$tt,"gallery-".getThemeActive()."-".$tt,"","",$json);
 			echo json_encode('ok');
 		}else{
 			echo json_encode('no');
@@ -63,6 +63,7 @@ class Menus extends MX_Controller
     	$kat=$this->input->post('page');
     	$menu=$this->input->post('menu');
     	if(!empty($kat) && !empty($menu)){
+    		$output='';
 			foreach($kat as $k=>$v){
 				$json=json_encode(array(
 				'create'=>dateNow(TRUE),
@@ -72,9 +73,11 @@ class Menus extends MX_Controller
 				));
 				$postTitle=postInfo($v,"post_title");
 				$postSlug=postInfo($v,"post_slug");
-				insertTerms("menu_".$menu."_".getThemeActive(),$postTitle,$postSlug."_menu","","",$json);
+				insertTerms("menu_".$menu."_".getThemeActive(),$postTitle,$postSlug."-".getThemeActive()."-menu","","",$json);
+				$output.=$postSlug;
 			}
 			echo json_encode('ok');
+			//echo json_encode($output);
 		}else{
 			echo json_encode('no');
 		}	
@@ -92,7 +95,7 @@ class Menus extends MX_Controller
 			'value'=>$url,
 			'theme'=>getThemeActive(),
 			));
-			insertterms("menu_".$menu."_".getThemeActive(),$title,$slug."_menu","","",$json);			
+			insertterms("menu_".$menu."_".getThemeActive(),$title,$slug."-".getThemeActive()."-menu","","",$json);			
 			echo json_encode('ok');
 		}else{
 			echo json_encode('no');
@@ -123,7 +126,7 @@ class Menus extends MX_Controller
 		$slug=stringCreateSlug($title);
 		$jsondata=dbField('terms','term_id',$menu,'term_data');
 		$tipe="menu_".$pos."_".getThemeActive();
-		$catSlug=stringCreateSlug($title)."_menu";
+		$catSlug=dbField('terms','term_id',$menu,'slug');
 		updateTerms($menu,$tipe,$title,$catSlug,"",$parent,$jsondata);
 		//updateTerms($menu,'menu_'.$pos,$title,$slug."_menu","",$parent,$jsondata);
 		echo json_encode('ok');
@@ -139,7 +142,7 @@ class Menus extends MX_Controller
 		//updateTerms($menu,'menu_'.$pos,$title,$slug."_menu","",$parent,$jsondata);
 		//insertTerms("menu_".$menu."_".getThemeActive(),$catName,$catSlug,"","",$json);
 		$tipe="menu_".$pos."_".getThemeActive();
-		$catSlug=stringCreateSlug($title)."_menu";
+		$catSlug=dbField('terms','term_id',$menu,'slug');
 		updateTerms($menu,$tipe,$title,$catSlug,"",$parent,$jsondata);
 		
 		echo json_encode('ok');
@@ -153,7 +156,7 @@ class Menus extends MX_Controller
 		$slug=stringCreateSlug($title);
 		$jsondata=dbField('terms','term_id',$menu,'term_data');
 		$tipe="menu_".$pos."_".getThemeActive();
-		$catSlug=stringCreateSlug($title)."_menu";
+		$catSlug=dbField('terms','term_id',$menu,'slug');
 		updateTerms($menu,$tipe,$title,$catSlug,"",$parent,$jsondata);
 		//updateTerms($menu,'menu_'.$pos,$title,$slug."_menu","",$parent,$jsondata);
 		echo json_encode('ok');
@@ -174,15 +177,85 @@ class Menus extends MX_Controller
 		));
 		//updateTerms($menu,'menu_'.$pos,$title,$slug."_menu","",$parent,$jsondata);
 		$tipe="menu_".$pos."_".getThemeActive();
-		$catSlug=stringCreateSlug($title)."_menu";
+		$catSlug=dbField('terms','term_id',$menu,'slug');
 		updateTerms($menu,$tipe,$title,$catSlug,"",$parent,$jsondata);
 		echo json_encode('ok');
 	}	
 	
 	function reorder(){
+		$j=$_POST['menuItem'];
+		$theme=optionGet('theme_front');
 		$menu=$this->input->get('menu');
+		$output=array();
+		$i=0;
+		$i2=0;
+		foreach($j as $k=>$v){
+			
+			if($v=="null"){
+				$i+=1;
+				$output[]=array(
+				'number'=>$k,
+				'parent'=>'0',
+				'order'=>$i,
+				);
+				
+				$d=array(
+				'order_term'=>$i,
+				'term_parent'=>'0',
+				);
+				$s=array(
+				'term_id'=>$k,
+				);
+				
+				
+				$d2=array(
+				'order_term'=>$i,
+				'parent'=>'0',
+				);
+				$s2=array(
+				'term_id'=>$k,
+				'term_type'=>'menu_'.$menu.'_'.$theme,			
+				);
+				$this->m_database->editRow('terms',$d,$s);
+				$this->m_database->editRow('termstaxonomy',$d2,$s2);
+				
+			}else{
+				$i2+=1;
+				$output[]=array(
+				'number'=>$k,
+				'parent'=>$v,
+				'order'=>$i2,
+				);
+				
+				$d=array(
+				'term_parent'=>$v,
+				'order_term'=>$i2,
+				);
+				$s=array(
+				'term_id'=>$k,
+				);
+				
+				
+				$d2=array(
+				'parent'=>$v,
+				'order_term'=>$i2,
+				);
+				$s2=array(
+				'term_id'=>$k,
+				'term_type'=>'menu_'.$menu.'_'.$theme,			
+				);
+				$this->m_database->editRow('terms',$d,$s);
+				$this->m_database->editRow('termstaxonomy',$d2,$s2);
+			}						
+		}
+		echo json_encode("ok");
+	}
+	
+	function reorder2(){
+		
 		$i=0;
 		$theme=optionGet('theme_front');
+		$menu=$this->input->get('menu');
 		foreach($_POST['menuItem'] as $k=>$v){
 			$i+=1;
 			$index = array_search($k,array_values($_POST['menuItem']));
@@ -190,6 +263,7 @@ class Menus extends MX_Controller
 			if($v=='null'){
 				$d=array(
 				'order_term'=>$index,
+				'term_parent'=>'0',
 				);
 				$s=array(
 				'term_id'=>$k,
@@ -198,6 +272,7 @@ class Menus extends MX_Controller
 				
 				$d2=array(
 				'order_term'=>$index,
+				'parent'=>'0',
 				);
 				$s2=array(
 				'term_id'=>$k,
