@@ -1,5 +1,3 @@
--- --------------------------------------------------------
-
 --
 -- Table structure for table `album`
 --
@@ -74,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `options` (
   `sistem` tinyint(1) NOT NULL,
   PRIMARY KEY (`option_id`),
   KEY `option_key` (`option_key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=44 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
 
 --
 -- Dumping data for table `options`
@@ -123,7 +121,8 @@ INSERT INTO `options` (`option_id`, `option_key`, `option_val`, `tipe`, `sistem`
 (40, 'google', '', 'text', 1),
 (41, 'bing', '', 'text', 1),
 (42, 'alexa', '', 'text', 1),
-(43, 'ogfacebook', '1', 'text', 1);
+(43, 'ogfacebook', '1', 'text', 1),
+(44, 'feed_minangcms', 'http://feeds.feedburner.com/minangcms?format=xml', 'text', 1);
 
 -- --------------------------------------------------------
 
@@ -158,6 +157,8 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `post_user` bigint(20) unsigned NOT NULL,
   `post_slug` varchar(200) NOT NULL,
   `post_status` varchar(20) NOT NULL,
+  `post_hit` bigint(20) unsigned NOT NULL,
+  `post_editor_choice` varchar(10) NOT NULL,
   PRIMARY KEY (`post_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -188,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `route` (
   `route_val` varchar(200) NOT NULL,
   PRIMARY KEY (`route_id`),
   KEY `route_key` (`route_key`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `route`
@@ -211,7 +212,9 @@ INSERT INTO `route` (`route_id`, `route_name`, `route_key`, `route_val`) VALUES
 (15, 'freshinstall', 'installuser', 'authentication/auth/freshinstall'),
 (16, 'media', 'media/(:any)', 'frontend/homepage/media/$1'),
 (17, 'feed', 'feed', 'frontend/feed/index'),
-(18, 'feedcustom', 'feed/(:any)', 'frontend/feed/$1');
+(18, 'feedcustom', 'feed/(:any)', 'frontend/feed/$1'),
+(19, 'events', 'events', 'frontend/homepage/index/events'),
+(20, 'postall', 'posts', 'frontend/homepage/index/posts');
 
 -- --------------------------------------------------------
 
@@ -227,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `terms` (
   `term_data` text NOT NULL,
   `order_term` int(4) NOT NULL,
   PRIMARY KEY (`term_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=97 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=157 ;
 
 --
 -- Dumping data for table `terms`
@@ -245,12 +248,7 @@ INSERT INTO `terms` (`term_id`, `name`, `slug`, `term_parent`, `term_data`, `ord
 (85, 'event-widget', 'event-widget', 0, '{"service":"event","description":"Menampilkan event"}', 0),
 (86, 'okto1-template', 'okto1-template', 0, '{"theme":"okto1","footer":"Copyright Â© Minang CMS. Heru Rahmat Akhnuari"}', 0),
 (87, 'Berita', 'berita', 0, '', 0),
-(91, 'sumbar', 'sumbar', 0, '', 0),
-(92, 'syawal', 'syawal', 0, '', 0),
-(93, 'Berita', 'berita_menu', 0, '{"create":"2015-10-30 00:48:10","relasi":"category","categoryid":"87"}', 0),
-(94, 'search-widget', 'search-widget', 0, '{"service":"search","description":"Menampilkan pencarian"}', 0),
-(95, 'recentpost-widget', 'recentpost-widget', 0, '{"service":"recentpost","description":"Menampilkan Berita Terbaru"}', 0),
-(96, 'okto1_sidebar_homepageleft_item', 'okto1-sidebar-homepageleft-item-1446141270', 76, '{"prefix":"recentpost","title":"Berita Terbaru"}', 0);
+(91, 'sumbar', 'sumbar', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -261,12 +259,12 @@ INSERT INTO `terms` (`term_id`, `name`, `slug`, `term_parent`, `term_data`, `ord
 CREATE TABLE IF NOT EXISTS `termstaxonomy` (
   `term_taxonomy_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `term_id` bigint(20) unsigned NOT NULL,
-  `term_type` varchar(32) NOT NULL,
+  `term_type` varchar(200) NOT NULL,
   `description` longtext NOT NULL,
   `parent` bigint(10) unsigned NOT NULL,
   `order_term` int(4) NOT NULL,
   PRIMARY KEY (`term_taxonomy_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=100 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=160 ;
 
 --
 -- Dumping data for table `termstaxonomy`
@@ -285,12 +283,7 @@ INSERT INTO `termstaxonomy` (`term_taxonomy_id`, `term_id`, `term_type`, `descri
 (86, 86, 'template', '', 0, 0),
 (87, 87, 'blockip', '', 0, 0),
 (90, 87, 'category', '', 0, 0),
-(94, 91, 'tag', '', 0, 0),
-(95, 92, 'tag', '', 0, 0),
-(96, 93, 'menu_top', '', 0, 0),
-(97, 94, 'search_widget', 'Menampilkan search', 0, 0),
-(98, 95, 'recentpost_widget', 'Menampilkan recentpost', 0, 0),
-(99, 96, 'sidebar', '', 76, 0);
+(94, 91, 'tag', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -308,8 +301,9 @@ CREATE TABLE IF NOT EXISTS `userlogin` (
   `email` varchar(60) NOT NULL,
   PRIMARY KEY (`user_id`),
   KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `userrole`
@@ -346,4 +340,4 @@ CREATE TABLE IF NOT EXISTS `usertaxonomy` (
   `taxo_val` text NOT NULL,
   `taxo_expired` datetime DEFAULT NULL,
   PRIMARY KEY (`taxo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
