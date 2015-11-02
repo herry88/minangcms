@@ -2,7 +2,7 @@
 $themeFront=optionGet('theme_front');
 $sidebar=getTerms('sidebar');
 ?>
-<label>Pilih Widget</label>
+<label>Pilih Widget <br/><small class="text-info">(*) Widget ini sesuai tema yang aktif</small></label>
 <select name="widget" id="widget" class="form-control">
 <option value="">-Posisi Widget-</option>
 <?php
