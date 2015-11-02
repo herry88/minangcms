@@ -1,35 +1,8 @@
 <?php if (!defined('BASEPATH')) exit ('No direct script access allowed');
-/**
- * Feed generator class for ci-feed library.
- *
- * @author Roumen Damianoff <roumen@dawebs.com>
- * @version 1.2.2
- * @link http://roumen.it/projects/ci-feed
- * @license http://opensource.org/licenses/mit-license.php MIT License
- */
 
 class Feedweb
 {
-
-    public $items = array();
-    public $title = 'My feed title';
-    public $description = 'My feed description';
-    public $link;
-    public $pubdate;
-    public $lang;
-
-
-    /**
-     * Add new item to $items array
-     *
-     * @param string $title
-     * @param string $author
-     * @param string $link
-     * @param string $pubdate
-     * @param string $description
-     *
-     * @return void
-     */
+	var $feed;
     public function add($title, $author, $link, $pubdate, $description)
     {
         $this->items[] = array(
@@ -41,14 +14,6 @@ class Feedweb
         );
     }
 
-
-    /**
-     * Returns aggregated feed with all items from $items array
-     *
-     * @param string $format (options: 'atom', 'rss')
-     *
-     * @return view
-     */
     public function render($format = 'atom',$view)
     {
         $CI =& get_instance();
@@ -69,5 +34,52 @@ class Feedweb
 
         $CI->load->view($view.'/'.$format, $data);
     }
+    
+    
+    function rss($feed) 
+    {   
+    	$this->feed = $feed;  
+    }
+    
+    function parse() 
+    {
+	    $rss = simplexml_load_file($this->feed);
+	    
+	    $rss_split = array();
+	    foreach ($rss->channel->item as $item) {
+	    $title = (string) $item->title; // Title
+	    $link   = (string) $item->link; // Url Link
+	    $description = (string) $item->description; //Description
+	    $rss_split[] = '<div>
+	        <a href="'.$link.'" target="_blank" title="" >
+	            '.$title.' 
+	        </a>
+	   <hr>
+	          </div>
+	';
+	    }
+	    return $rss_split;
+	  }
+	  
+	 function display($numrows,$head) 
+	  {
+	    $rss_split = $this->parse();
+
+	    $i = 0;
+	    $rss_data = '<div class="vas">
+	           <div class="title-head">
+	         '.$head.'
+	           </div>
+	         <div class="feeds-links">';
+	    while ( $i < $numrows ) 
+	   {
+	      $rss_data .= $rss_split[$i];
+	      $i++;
+	    }
+	    $trim = str_replace('', '',$this->feed);
+	    $user = str_replace('&lang=en-us&format=rss_200','',$trim);
+	    $rss_data.='</div></div>';
+	    return $rss_data;
+	  }
 
 }
