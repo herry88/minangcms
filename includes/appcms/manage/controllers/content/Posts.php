@@ -189,6 +189,21 @@ class Posts extends MX_Controller
 		}
 	}
 	
+	function adddraft(){
+		$this->m_security->filterPost('title','required');
+		$this->m_security->filterPost('konten','required');
+		if($this->m_security->startPost()==TRUE){
+			$judul=$this->input->post('title');
+			$konten=$this->input->post('konten');
+			$tglSekarang=dateNow(TRUE);
+			$this->load->model('post_model','pm');
+			$this->pm->addPost($judul,$tglSekarang,$konten,"draft");
+			redirect(base_url(roleURIUser().'content/posts'),'refresh');
+		}else{
+			redirect(base_url(roleURIUser().'dashboard'),'refresh');
+		}
+	}
+	
 	function edit(){
 		$id=$this->input->get('id',TRUE);
 		$s=array(
