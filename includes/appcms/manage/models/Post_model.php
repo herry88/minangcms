@@ -2,12 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Post_model extends MX_Controller
 {
-    function addPost($title,$date,$content,$status='publish',$category=array(),$tags=array(),$keywordAdd='',$komentar,$tampilan,$feature){
+    function addPost($title,$date,$content,$status='publish',$category='',$tags='',$keywordAdd='',$komentar='',$tampilan='',$feature=''){
     	$xStatus="";
     	if(roleUser()=="op"){
 			$xStatus="draft";
-		}else{
-			$xStatus="publish";
+		}else{			
+			$xStatus=$status;
 		}
 		$d=array(
 		'post_title'=>$title,
@@ -223,7 +223,7 @@ class Post_model extends MX_Controller
 		}
 	}
 	
-	function insertCategoryPost($postid,$category){
+	function insertCategoryPost($postid,$category=''){
 		
 		if(!empty($category)){
 			foreach($category as $k=>$v){
@@ -260,7 +260,7 @@ class Post_model extends MX_Controller
 		$this->m_database->deleteRow('poststaxonomy',$s);
 	}
 	
-	function insertTagPost($postid,$tags){
+	function insertTagPost($postid,$tags=''){
 		$p='';
 		if(!empty($tags)){
 			foreach($tags as $row)
