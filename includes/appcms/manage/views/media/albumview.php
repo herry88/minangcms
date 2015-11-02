@@ -25,8 +25,6 @@ echo incJS(locationPlugin('url').'datatables/extensions/responsive/js/dataTables
         	"sPaginationType": "full_numbers",        
             "iDisplayStart ": 10,
             "aoColumns": [{
-	             "mData": "cover"
-	         }, {
 	             "mData": "judul"
 	         }, {
 	             "mData": "tanggal"
@@ -59,8 +57,7 @@ echo incJS(locationPlugin('url').'datatables/extensions/responsive/js/dataTables
 <p>&nbsp;</p>
 <table id="tb" class="table table-bordered table-hover table-striped tablesorter dt-responsive nowrap">
 <thead>
-    <tr>
-    	<th>#</th>
+    <tr>    	
         <th>Judul</th>
         <th>Tanggal</th>
         <th>Keterangan</th>  

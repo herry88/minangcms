@@ -84,29 +84,6 @@ echo form_open(base_url(roleURIUser().'media/album/editapply'),$att);
 		<textarea name="keterangan" class="form-control textarea-editor" rows="8"><?=$row->album_description;?></textarea>
 	</div>
 </div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">Cover Album</label>
-	<div class="col-md-3">
-		<?php
-		$img=$row->album_cover;
-		if(!empty($img)){
-			?>
-			<img src="<?=urlApp().$img;?>" id="imgfeature" class="thumbnail img-responsive" style="height: 300px;"/>
-			<a href="javascript:;" id="remFeature">Hapus Cover Gambar</a>
-			<a href="javascript:;" onclick="openKCFinder('featureimage')" class="form-control" id="addFeature" style="display: none;">Pilih Gambar</a>
-			<?php
-		}else{
-			?>
-			<img src="" id="imgfeature" class="thumbnail img-responsive" style="height: 300px;"/>
-			<a href="javascript:;" onclick="openKCFinder('featureimage')" class="form-control" id="addFeature">Pilih Gambar</a>
-			<a href="javascript:;" id="remFeature" style="display: none;">Hapus Cover Gambar</a>
-			<?php
-		}
-		?>			  	
-	  	<input type="hidden" name="featureimage" id="featureimage" value="<?=$img;?>"/>
-	</div>
-</div>
 <?php
 echo form_close();
 ?>

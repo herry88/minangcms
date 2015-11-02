@@ -80,7 +80,7 @@ class Album extends MX_Controller
 			$cover=$this->input->post('featureimage');
 			
 			$this->load->model('media_model','mm');
-			$proses=$this->mm->addAlbum($nama,$keterangan,$cover,'publish');
+			$proses=$this->mm->addAlbum($nama,$keterangan,"",'publish');
 			if($proses==TRUE){
 				redirect(base_url(roleURIUser().'media/album'),'refresh');
 			}else{
@@ -103,7 +103,7 @@ class Album extends MX_Controller
 			$cover=$this->input->post('featureimage');
 			
 			$this->load->model('media_model','mm');
-			$proses=$this->mm->editAlbum($albumid,$nama,$keterangan,$cover,'publish');
+			$proses=$this->mm->editAlbum($albumid,$nama,$keterangan,"",'publish');
 			if($proses==TRUE){
 				redirect(base_url(roleURIUser().'media/album'),'refresh');
 			}else{

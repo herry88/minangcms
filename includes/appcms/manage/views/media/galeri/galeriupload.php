@@ -50,12 +50,7 @@ $slug=stringCreateSlug($row->gallery_title);
 		<small>Limit upload file : <?php echo (int)(ini_get('upload_max_filesize'));?> MB</small>
 	</div>
 </div>
-<div class="form-group">
-	<label class="col-sm-2 control-label">Alt</label>
-	<div class="col-md-8">
-		<input type="text" name="altinfo" class="form-control"/>
-	</div>
-</div>
+		<input type="hidden" name="altinfo" class="form-control"/>	
 <div class="form-group">
 	<label class="col-sm-2 control-label">&nbsp;</label>
 	<div class="col-md-5">

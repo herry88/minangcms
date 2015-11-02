@@ -80,16 +80,6 @@ echo form_open(base_url(roleURIUser().'media/album/addapply'),$att);
 		<textarea name="keterangan" class="form-control textarea-editor" rows="8"><?=set_value('keterangan');?></textarea>
 	</div>
 </div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">Cover Album</label>
-	<div class="col-md-3">
-		<img src="" id="imgfeature" class="thumbnail img-responsive" style="height: 300px;display: none;"/>
-	  	<a href="javascript:;" onclick="openKCFinder('featureimage')" class="form-control" id="addFeature">Pilih Gambar</a>
-	  	<a href="javascript:;" id="remFeature" style="display: none;">Hapus Cover Gambar</a>
-	  	<input type="hidden" name="featureimage" id="featureimage" value="<?=set_value('featureimage');?>"/>
-	</div>
-</div>
 <?php
 echo form_close();
 ?>
